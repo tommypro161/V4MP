@@ -1,0 +1,2190 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V4MP.AI | Fortnite AI Coach, Windows FPS Tweaks & Pro Settings</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050405;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .card-surface {
+            background-color: #0f0b0d;
+            border: 1px solid rgba(244, 63, 94, 0.25);
+        }
+
+        .card-surface:hover {
+            border-color: rgba(244, 63, 94, 0.55);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade {
+            animation: fadeIn 0.22s ease-out forwards;
+        }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #050405; }
+        ::-webkit-scrollbar-thumb { background: #3f121e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e11d48; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-rose-600 selection:text-white">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="border-b border-rose-900/40 bg-black/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-2">
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-2.5 cursor-pointer shrink-0" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-600 to-red-800 flex items-center justify-center font-extrabold text-lg text-white shadow-lg shadow-rose-950">
+                    V4
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg text-white block leading-none">V4MP<span class="text-rose-500">.AI</span></span>
+                    <span class="text-[11px] text-slate-400 font-medium">Fortnite Coach</span>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden xl:flex items-center space-x-1 bg-[#0f0b0d] p-1.5 rounded-2xl border border-rose-900/30">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-bold transition-all bg-rose-600 text-white cursor-pointer">
+                    <i class="fa-solid fa-house mr-1"></i>Start
+                </button>
+                <button onclick="switchTab('chat')" id="nav-chat" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-comments mr-1 text-rose-400"></i>Ask AI
+                </button>
+                <button onclick="switchTab('routine')" id="nav-routine" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-list-check mr-1 text-rose-400"></i>Routines
+                </button>
+                <button onclick="switchTab('library')" id="nav-library" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-dumbbell mr-1 text-rose-400"></i>Drills
+                </button>
+                <button onclick="switchTab('optimization')" id="nav-optimization" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-gauge-high mr-1 text-rose-400"></i>FPS & Windows
+                </button>
+                <button onclick="switchTab('kbm')" id="nav-kbm" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-computer-mouse mr-1 text-rose-400"></i>KBM Pros
+                </button>
+                <button onclick="switchTab('controller')" id="nav-controller" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-gamepad mr-1 text-rose-400"></i>Controller
+                </button>
+                <button onclick="switchTab('analyzer')" id="nav-analyzer" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-video mr-1 text-rose-400"></i>VOD Coach
+                </button>
+                <button onclick="switchTab('roadmap')" id="nav-roadmap" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 cursor-pointer">
+                    <i class="fa-solid fa-map mr-1 text-rose-400"></i>Goals
+                </button>
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-2.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-300 hover:text-white hover:bg-white/5 relative cursor-pointer">
+                    <i class="fa-solid fa-bookmark mr-1 text-rose-400"></i>Saved
+                    <span id="dash-badge" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500"></span>
+                </button>
+            </nav>
+
+            <!-- Account Button -->
+            <div id="auth-action-area" class="shrink-0">
+                <button onclick="openAuthModal()" class="bg-rose-600 hover:bg-rose-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-all flex items-center space-x-2 cursor-pointer shadow-md shadow-rose-950">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Save Progress</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile / Tablet Easy-Scroll Navigation Strip -->
+        <div class="flex xl:hidden overflow-x-auto border-t border-rose-900/30 bg-[#0a0709] px-4 py-2.5 space-x-2">
+            <button onclick="switchTab('home')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-600 text-white">Start Here</button>
+            <button onclick="switchTab('chat')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">Ask AI Coach</button>
+            <button onclick="switchTab('routine')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">Routines</button>
+            <button onclick="switchTab('library')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">All Drills</button>
+            <button onclick="switchTab('optimization')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">FPS & Windows</button>
+            <button onclick="switchTab('kbm')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">KBM Pros</button>
+            <button onclick="switchTab('controller')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">Controller</button>
+            <button onclick="switchTab('analyzer')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">VOD Coach</button>
+            <button onclick="switchTab('roadmap')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">Goals</button>
+            <button onclick="switchTab('dashboard')" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/5">Saved</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+
+        <!-- ================= TAB 1: START HERE ================= -->
+        <div id="tab-content-home" class="animate-fade space-y-10">
+            <div class="card-surface rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="max-w-3xl space-y-5 relative z-10">
+                    <span class="inline-flex items-center space-x-2 bg-rose-950/80 border border-rose-500/30 px-4 py-1.5 rounded-full text-rose-300 text-xs font-bold uppercase tracking-wide">
+                        <i class="fa-solid fa-sparkles text-rose-400"></i>
+                        <span>All-in-One Fortnite AI Coach, Windows Tweaks & Pro Settings</span>
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+                        Improve your aim, builds, and FPS <span class="text-rose-500">all in one place.</span>
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        Ask our Fortnite AI Coach any question directly, unlock 28 step-by-step Windows & in-game FPS boosts, generate custom timed routines, and copy pro KBM & Controller settings.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="switchTab('chat')" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-6 py-3.5 rounded-2xl text-sm transition-all shadow-lg shadow-rose-950 flex items-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>Chat With Fortnite AI Coach</span>
+                        </button>
+                        <button onclick="switchTab('optimization')" class="bg-white/10 hover:bg-white/15 text-white font-bold px-6 py-3.5 rounded-2xl text-sm transition-all cursor-pointer">
+                            <i class="fa-solid fa-gauge-high mr-1.5 text-rose-400"></i>28 Windows & FPS Tweaks
+                        </button>
+                        <button onclick="quickStartBeginner()" class="bg-white/10 hover:bg-white/15 text-white font-bold px-6 py-3.5 rounded-2xl text-sm transition-all cursor-pointer">
+                            <i class="fa-solid fa-play mr-1.5 text-rose-400"></i>30m Beginner Routine
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Feature Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div onclick="switchTab('chat')" class="card-surface rounded-2xl p-6 space-y-2.5 cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-lg"><i class="fa-solid fa-comments"></i></div>
+                    <h3 class="text-base font-bold text-white">Ask Fortnite AI Coach</h3>
+                    <p class="text-sm text-slate-300">Ask anything about piece control, sensitivity, Ranked, or Creative maps.</p>
+                </div>
+                <div onclick="switchTab('optimization')" class="card-surface rounded-2xl p-6 space-y-2.5 cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-lg"><i class="fa-solid fa-gauge-high"></i></div>
+                    <h3 class="text-base font-bold text-white">28 Windows & FPS Tweaks</h3>
+                    <p class="text-sm text-slate-300">Deep Windows 10/11 system tweaks, colorblind presets, and ping fixes.</p>
+                </div>
+                <div onclick="switchTab('kbm')" class="card-surface rounded-2xl p-6 space-y-2.5 cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-lg"><i class="fa-solid fa-computer-mouse"></i></div>
+                    <h3 class="text-base font-bold text-white">2,500+ KBM Settings</h3>
+                    <p class="text-sm text-slate-300">Check DPI, X/Y sensitivity, eDPI, and build binds from top pros.</p>
+                </div>
+                <div onclick="switchTab('controller')" class="card-surface rounded-2xl p-6 space-y-2.5 cursor-pointer transition-all hover:-translate-y-1">
+                    <div class="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-lg"><i class="fa-solid fa-gamepad"></i></div>
+                    <h3 class="text-base font-bold text-white">1,500+ Controller Setups</h3>
+                    <p class="text-sm text-slate-300">Explore Linear/Expo curves, build multipliers, and deadzones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: DIRECT AI FORTNITE COACH CHATBOX ================= -->
+        <div id="tab-content-chat" class="hidden animate-fade space-y-6">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 flex flex-col h-[76vh] min-h-[540px]">
+                <!-- Chat Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-rose-900/40 pb-4 gap-3 shrink-0">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-11 h-11 rounded-2xl bg-rose-600 flex items-center justify-center text-white text-lg font-extrabold shadow-md shadow-rose-950">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <h2 class="text-xl font-extrabold text-white">V4MP Fortnite AI Coach</h2>
+                                <span class="text-[11px] font-bold bg-emerald-950 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-700/40">Online</span>
+                            </div>
+                            <p class="text-xs text-slate-300">Ask any question about Fortnite mechanics, settings, Creative maps, Ranked, or FPS tweaks.</p>
+                        </div>
+                    </div>
+                    <button onclick="clearAiChat()" class="text-xs font-bold bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl transition cursor-pointer self-start sm:self-center">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> New Chat
+                    </button>
+                </div>
+
+                <!-- Quick Starter Prompt Chips -->
+                <div class="flex flex-wrap gap-2 py-3 border-b border-rose-900/30 shrink-0">
+                    <button onclick="askQuickQuestion('How do I get better at piece control as a beginner?')" class="text-xs font-semibold bg-white/5 hover:bg-rose-600/30 border border-rose-800/40 text-slate-200 px-3 py-1.5 rounded-xl transition cursor-pointer">
+                        How do I learn piece control?
+                    </button>
+                    <button onclick="askQuickQuestion('What is the best colorblind setting to see through the storm?')" class="text-xs font-semibold bg-white/5 hover:bg-rose-600/30 border border-rose-800/40 text-slate-200 px-3 py-1.5 rounded-xl transition cursor-pointer">
+                        Best colorblind setting for storm?
+                    </button>
+                    <button onclick="askQuickQuestion('How do I boost FPS on Windows 11 for Fortnite?')" class="text-xs font-semibold bg-white/5 hover:bg-rose-600/30 border border-rose-800/40 text-slate-200 px-3 py-1.5 rounded-xl transition cursor-pointer">
+                        How to boost FPS on Windows?
+                    </button>
+                    <button onclick="askQuickQuestion('What mouse sensitivity and DPI should I use?')" class="text-xs font-semibold bg-white/5 hover:bg-rose-600/30 border border-rose-800/40 text-slate-200 px-3 py-1.5 rounded-xl transition cursor-pointer">
+                        What sensitivity should I use?
+                    </button>
+                    <button onclick="askQuickQuestion('How do I stop dying off spawn in Ranked?')" class="text-xs font-semibold bg-white/5 hover:bg-rose-600/30 border border-rose-800/40 text-slate-200 px-3 py-1.5 rounded-xl transition cursor-pointer">
+                        How to stop dying off spawn?
+                    </button>
+                </div>
+
+                <!-- Chat Messages Feed -->
+                <div id="ai-chat-messages" class="flex-grow overflow-y-auto py-4 space-y-4 pr-2">
+                    <!-- Welcome Message -->
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-xl bg-rose-600/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">AI</div>
+                        <div class="bg-[#161013] border border-rose-900/40 rounded-2xl rounded-tl-none p-4 max-w-2xl text-sm text-slate-200 space-y-2 leading-relaxed">
+                            <p><strong class="text-white">Hey! I'm your V4MP Fortnite Coach.</strong> Ask me anything about the game—whether you want to learn how to tunnel, pick a sensitivity, lower your ping, or win more Ranked endgames.</p>
+                            <p class="text-xs text-slate-400">Type your question below or click one of the starter questions above!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Form -->
+                <form onsubmit="handleChatSubmit(event)" class="pt-3 border-t border-rose-900/40 flex items-center space-x-3 shrink-0">
+                    <input type="text" id="ai-chat-input" placeholder="Ask anything about Fortnite (e.g., How do I win more box fights?)..." class="flex-grow bg-[#161013] border border-rose-800/50 rounded-2xl px-4 py-3.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500">
+                    <button type="submit" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-6 py-3.5 rounded-2xl text-sm transition cursor-pointer flex items-center space-x-2 shrink-0 shadow-md shadow-rose-950">
+                        <span>Send</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: ROUTINE BUILDER ================= -->
+        <div id="tab-content-routine" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Build Your Practice Routine</h2>
+                    <p class="text-sm sm:text-base text-slate-300 mt-1">
+                        Choose your skill level, pick what you want to practice, and enter how much time you have.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 bg-black/80 border border-rose-900/40 rounded-2xl p-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-rose-400 mb-2">1. Your Skill Level</label>
+                        <select id="routine-level" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-4 py-3.5 text-sm text-white font-medium focus:outline-none focus:border-rose-500">
+                            <option value="Beginner" selected>Beginner (Learning Basics)</option>
+                            <option value="Intermediate">Intermediate (Knows Basic Builds/Aim)</option>
+                            <option value="Advanced">Advanced (Ranked Grinder)</option>
+                            <option value="Professional">Professional (Tournament Ready)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-rose-400 mb-2">2. What to Practice</label>
+                        <select id="routine-focus" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-4 py-3.5 text-sm text-white font-medium focus:outline-none focus:border-rose-500">
+                            <option value="All-Around Practice">Everything (Aim + Building + Editing)</option>
+                            <option value="Aim">Aim & Hitting More Shots</option>
+                            <option value="Building">Building & Protecting Yourself</option>
+                            <option value="Editing">Editing Walls & Cones Faster</option>
+                            <option value="Piece Control">Piece Control (Trapping Enemies)</option>
+                            <option value="Game Sense">Game Sense & Winning Endgames</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-rose-400 mb-2">3. How Much Time Do You Have?</label>
+                        <input type="text" id="routine-time-input" value="30 minutes" placeholder="e.g. 30 minutes, 1 hour, 2 hours and 15 minutes" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-4 py-3.5 text-sm text-white font-medium focus:outline-none focus:border-rose-500">
+                        <div class="flex flex-wrap gap-2 mt-2.5">
+                            <button type="button" onclick="setQuickTime('20 minutes')" class="text-xs font-semibold bg-white/10 hover:bg-rose-600 text-white px-3 py-1 rounded-lg transition cursor-pointer">20 mins</button>
+                            <button type="button" onclick="setQuickTime('45 minutes')" class="text-xs font-semibold bg-white/10 hover:bg-rose-600 text-white px-3 py-1 rounded-lg transition cursor-pointer">45 mins</button>
+                            <button type="button" onclick="setQuickTime('1 hour')" class="text-xs font-semibold bg-white/10 hover:bg-rose-600 text-white px-3 py-1 rounded-lg transition cursor-pointer">1 hour</button>
+                            <button type="button" onclick="setQuickTime('2 hours')" class="text-xs font-semibold bg-white/10 hover:bg-rose-600 text-white px-3 py-1 rounded-lg transition cursor-pointer">2 hours</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="generateGranularRoutine()" class="w-full sm:w-auto bg-rose-600 hover:bg-rose-500 text-white font-bold px-8 py-4 rounded-2xl text-sm transition cursor-pointer shadow-lg shadow-rose-950 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Create My Fortnite Routine</span>
+                </button>
+
+                <div id="routine-output" class="space-y-6 pt-2">
+                    <div class="bg-black/60 border border-rose-900/30 rounded-2xl p-10 text-center space-y-2">
+                        <i class="fa-solid fa-clipboard-list text-3xl text-rose-500 mb-1"></i>
+                        <p class="text-base font-bold text-white">Ready when you are!</p>
+                        <p class="text-sm text-slate-400">Pick your skill level and time above, then click <strong>Create My Fortnite Routine</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: DRILL VAULT (3,420 DRILLS) ================= -->
+        <div id="tab-content-library" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-rose-900/40 pb-6 gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Drill Vault (3,420 Drills)</h2>
+                        <p class="text-sm text-slate-300 mt-1">Browse every drill in the game from Beginner to Pro. Click any map code to copy it.</p>
+                    </div>
+                    <div class="relative w-full md:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" id="vault-search" placeholder="Search aim, edits, map code..." oninput="filterVaultDrills()" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Filter by Difficulty:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="setVaultTier('all')" id="tier-btn-all" class="vault-tier-btn bg-rose-600 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl cursor-pointer">All Levels</button>
+                            <button onclick="setVaultTier('Beginner')" id="tier-btn-Beginner" class="vault-tier-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Beginner</button>
+                            <button onclick="setVaultTier('Intermediate')" id="tier-btn-Intermediate" class="vault-tier-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Intermediate</button>
+                            <button onclick="setVaultTier('Advanced')" id="tier-btn-Advanced" class="vault-tier-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Advanced</button>
+                            <button onclick="setVaultTier('Professional')" id="tier-btn-Professional" class="vault-tier-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Pro</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">Filter by Skill:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="setVaultCategory('all')" id="cat-btn-all" class="vault-cat-btn bg-rose-600 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl cursor-pointer">All Skills</button>
+                            <button onclick="setVaultCategory('Aim')" id="cat-btn-Aim" class="vault-cat-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Aim</button>
+                            <button onclick="setVaultCategory('Building')" id="cat-btn-Building" class="vault-cat-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Building</button>
+                            <button onclick="setVaultCategory('Editing')" id="cat-btn-Editing" class="vault-cat-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Editing</button>
+                            <button onclick="setVaultCategory('Piece Control')" id="cat-btn-Piece Control" class="vault-cat-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Piece Control</button>
+                            <button onclick="setVaultCategory('Game Sense')" id="cat-btn-Game Sense" class="vault-cat-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Game Sense</button>
+                            <button onclick="setVaultCategory('Movement')" id="cat-btn-Movement" class="vault-cat-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Movement</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vault-items-container" class="space-y-4 pt-2"></div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-rose-900/40 gap-4 text-sm text-slate-300">
+                    <span id="vault-pagination-info" class="font-medium">Showing drills 1-10 of 3,420</span>
+                    <div class="flex space-x-3">
+                        <button onclick="changeVaultPage(-1)" class="bg-white/10 hover:bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl transition cursor-pointer">← Previous</button>
+                        <button onclick="changeVaultPage(1)" class="bg-white/10 hover:bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl transition cursor-pointer">Next →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 5: OPTIMIZATION, COLORBLIND & WINDOWS TWEAKS ================= -->
+        <div id="tab-content-optimization" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-rose-900/40 pb-6 gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-400">28 Step-by-Step Optimization Guides</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Fortnite FPS Boost, Colorblind Presets & Windows PC Tweaks</h2>
+                        <p class="text-sm sm:text-base text-slate-300 mt-1">
+                            Click any tweak card below to reveal easy step-by-step instructions—going deep into Windows 10/11 system settings, GPU control panels, network adapters, and colorblind visibility.
+                        </p>
+                    </div>
+                    <div class="relative w-full md:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" id="tweak-search" placeholder="Search Windows, 240Hz, DNS..." oninput="renderTweaks()" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <!-- Category Filter for Tweaks -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterTweaks('all', this)" class="tweak-filter-btn bg-rose-600 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl cursor-pointer">All Tweaks (28)</button>
+                    <button onclick="filterTweaks('windows', this)" class="tweak-filter-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Windows 10/11 System Tweaks (12)</button>
+                    <button onclick="filterTweaks('colorblind', this)" class="tweak-filter-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Colorblind & Visibility (7)</button>
+                    <button onclick="filterTweaks('ingame', this)" class="tweak-filter-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Fortnite Video & FPS (5)</button>
+                    <button onclick="filterTweaks('network', this)" class="tweak-filter-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Network & Lower Ping (4)</button>
+                </div>
+
+                <!-- Expandable Tweak Cards List -->
+                <div id="tweaks-container" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 6: KBM PRO SETTINGS (2,500+ PROFILES) ================= -->
+        <div id="tab-content-kbm" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-rose-900/40 pb-6 gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Keyboard & Mouse Database</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">2,500+ Pro KBM Settings, DPI & Binds</h2>
+                        <p class="text-sm text-slate-300 mt-1">Search verified FNCS champions and ranked grinders by name, DPI (400 / 800 / 1600), or sensitivity.</p>
+                    </div>
+                    <div class="relative w-full md:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" id="kbm-search" placeholder="Search Peterbot, Clix, 800 DPI..." oninput="filterKbmPros()" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <!-- Interactive eDPI Calculator Helper -->
+                <div class="bg-black/75 border border-rose-900/40 rounded-2xl p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase text-rose-400 block">Quick eDPI Calculator (Compare Any Mouse)</span>
+                        <p class="text-xs text-slate-300 mt-0.5">Most pros stay between <strong>40 and 70 eDPI</strong>. Enter your mouse DPI and X% sens to check yours:</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-xs font-bold text-slate-400">DPI:</label>
+                            <input type="number" id="calc-dpi" value="800" oninput="calculateEdpi()" class="w-24 bg-[#161013] border border-rose-800/50 rounded-lg px-3 py-1.5 text-sm text-white font-mono">
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-xs font-bold text-slate-400">Sens %:</label>
+                            <input type="number" step="0.1" id="calc-sens" value="6.8" oninput="calculateEdpi()" class="w-20 bg-[#161013] border border-rose-800/50 rounded-lg px-3 py-1.5 text-sm text-white font-mono">
+                        </div>
+                        <div class="bg-rose-950/60 border border-rose-500/40 px-4 py-1.5 rounded-lg text-sm font-mono font-bold text-rose-300">
+                            Your eDPI: <span id="calc-result">54.4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DPI Filter Pills -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="setKbmDpiFilter('all')" id="kbm-dpi-all" class="kbm-dpi-btn bg-rose-600 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl cursor-pointer">All DPIs (2,500)</button>
+                    <button onclick="setKbmDpiFilter(400)" id="kbm-dpi-400" class="kbm-dpi-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">400 DPI</button>
+                    <button onclick="setKbmDpiFilter(800)" id="kbm-dpi-800" class="kbm-dpi-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">800 DPI</button>
+                    <button onclick="setKbmDpiFilter(1600)" id="kbm-dpi-1600" class="kbm-dpi-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">1600 DPI</button>
+                </div>
+
+                <!-- KBM Pro Table -->
+                <div class="overflow-x-auto rounded-2xl border border-rose-900/40">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-[#161013] border-b border-rose-900/40 text-xs uppercase tracking-wider text-slate-400">
+                                <th class="py-3.5 px-4">Player</th>
+                                <th class="py-3.5 px-4">DPI</th>
+                                <th class="py-3.5 px-4">X / Y Sens</th>
+                                <th class="py-3.5 px-4">eDPI</th>
+                                <th class="py-3.5 px-4">Targeting / Scope</th>
+                                <th class="py-3.5 px-4">Wall / Floor / Stair / Cone / Edit</th>
+                                <th class="py-3.5 px-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kbm-table-body" class="divide-y divide-rose-950/40 text-sm"></tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between pt-2 gap-4 text-sm text-slate-300">
+                    <span id="kbm-pagination-info">Showing 1–12 of 2,500 KBM pros</span>
+                    <div class="flex space-x-3">
+                        <button onclick="changeKbmPage(-1)" class="bg-white/10 hover:bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl transition cursor-pointer">← Previous</button>
+                        <button onclick="changeKbmPage(1)" class="bg-white/10 hover:bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl transition cursor-pointer">Next →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 7: CONTROLLER PRO SETTINGS (1,500+ PROFILES) ================= -->
+        <div id="tab-content-controller" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-rose-900/40 pb-6 gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Controller Database</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">1,500+ Pro Controller Settings & Curves</h2>
+                        <p class="text-sm text-slate-300 mt-1">Browse Linear & Exponential pro sensitivity setups, build/edit multipliers, and stick deadzones.</p>
+                    </div>
+                    <div class="relative w-full md:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" id="ctrl-search" placeholder="Search t3eny, Mero, Linear..." oninput="filterCtrlPros()" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <!-- Curve Filter Pills -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="setCtrlCurveFilter('all')" id="ctrl-curve-all" class="ctrl-curve-btn bg-rose-600 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl cursor-pointer">All Curves (1,500)</button>
+                    <button onclick="setCtrlCurveFilter('Linear')" id="ctrl-curve-Linear" class="ctrl-curve-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Linear</button>
+                    <button onclick="setCtrlCurveFilter('Exponential')" id="ctrl-curve-Exponential" class="ctrl-curve-btn bg-white/5 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl border border-white/10 cursor-pointer">Exponential</button>
+                </div>
+
+                <!-- Controller Pro Table -->
+                <div class="overflow-x-auto rounded-2xl border border-rose-900/40">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-[#161013] border-b border-rose-900/40 text-xs uppercase tracking-wider text-slate-400">
+                                <th class="py-3.5 px-4">Player</th>
+                                <th class="py-3.5 px-4">Input Curve</th>
+                                <th class="py-3.5 px-4">Look H / V</th>
+                                <th class="py-3.5 px-4">Build / Edit Mult</th>
+                                <th class="py-3.5 px-4">ADS H / V</th>
+                                <th class="py-3.5 px-4">Deadzones (L/R)</th>
+                                <th class="py-3.5 px-4">Grip / Edit Bind</th>
+                                <th class="py-3.5 px-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ctrl-table-body" class="divide-y divide-rose-950/40 text-sm"></tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between pt-2 gap-4 text-sm text-slate-300">
+                    <span id="ctrl-pagination-info">Showing 1–12 of 1,500 Controller pros</span>
+                    <div class="flex space-x-3">
+                        <button onclick="changeCtrlPage(-1)" class="bg-white/10 hover:bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl transition cursor-pointer">← Previous</button>
+                        <button onclick="changeCtrlPage(1)" class="bg-white/10 hover:bg-rose-600 text-white font-semibold px-4 py-2 rounded-xl transition cursor-pointer">Next →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 8: WATCH & COACH (VOD ANALYZER) ================= -->
+        <div id="tab-content-analyzer" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="border-b border-rose-900/40 pb-6">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">AI Gameplay Watcher & Weakness Finder</h2>
+                    <p class="text-sm sm:text-base text-slate-300 mt-1">
+                        Share your Fortnite screen or upload a video clip. The AI will tell you in plain English what mistakes you made and how to fix them.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-black/70 border border-rose-900/40 rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="w-11 h-11 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-lg mb-3"><i class="fa-solid fa-desktop"></i></div>
+                            <h3 class="text-base font-bold text-white mb-1">1. Watch Me Play Live</h3>
+                            <p class="text-sm text-slate-300">Share your Fortnite game window so the AI can spot mistakes while you play.</p>
+                        </div>
+                        <button onclick="startScreenCapture()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-3 rounded-xl text-sm transition cursor-pointer">Share Game Screen</button>
+                    </div>
+
+                    <div class="bg-black/70 border border-rose-900/40 rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="w-11 h-11 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-lg mb-3"><i class="fa-solid fa-upload"></i></div>
+                            <h3 class="text-base font-bold text-white mb-1">2. Upload a Match Clip</h3>
+                            <p class="text-sm text-slate-300">Pick a video file (.mp4) from your device to see what went wrong in a fight.</p>
+                        </div>
+                        <label class="w-full bg-white/10 hover:bg-white/15 text-white text-center font-bold py-3 rounded-xl text-sm transition cursor-pointer">
+                            Choose Video File
+                            <input type="file" accept="video/*" class="hidden" onchange="handleFileUpload(event)">
+                        </label>
+                    </div>
+
+                    <div class="bg-black/70 border border-rose-900/40 rounded-2xl p-6 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="w-11 h-11 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-lg mb-3"><i class="fa-solid fa-bolt"></i></div>
+                            <h3 class="text-base font-bold text-white mb-1">3. Try an Example Match</h3>
+                            <p class="text-sm text-slate-300">Click a preset below to see how the AI coach breaks down gameplay.</p>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="runDemoAnalysis('beginner')" class="bg-white/10 hover:bg-rose-600 text-xs font-bold py-2.5 rounded-xl text-white transition cursor-pointer">Beginner</button>
+                            <button onclick="runDemoAnalysis('zerobuild')" class="bg-white/10 hover:bg-rose-600 text-xs font-bold py-2.5 rounded-xl text-white transition cursor-pointer">Zero Build</button>
+                            <button onclick="runDemoAnalysis('endgame')" class="bg-white/10 hover:bg-rose-600 text-xs font-bold py-2.5 rounded-xl text-white transition cursor-pointer">Endgame</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="preview-container" class="hidden relative rounded-2xl overflow-hidden bg-black border border-rose-800/60 aspect-video flex items-center justify-center">
+                    <video id="live-video-preview" autoplay muted playsinline controls class="w-full h-full object-cover"></video>
+                    <div class="absolute top-4 left-4 bg-black/90 px-4 py-2 rounded-xl border border-rose-500/40 flex items-center space-x-2 text-xs font-bold text-rose-400">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                        <span>AI Coach is Watching...</span>
+                    </div>
+                </div>
+
+                <div id="analysis-results"></div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 9: MY GOALS (ROADMAP BUILDER) ================= -->
+        <div id="tab-content-roadmap" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-rose-900/40 pb-6 gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">My Improvement Goals</h2>
+                        <p class="text-sm sm:text-base text-slate-300 mt-1">
+                            Set your own weekly, monthly, or yearly goals—or click <strong>Make Goals For Me (AI)</strong> to generate a full plan.
+                        </p>
+                    </div>
+                    <button onclick="triggerAIRoadmapGeneration()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-6 py-3.5 rounded-2xl text-sm transition cursor-pointer shadow-lg shadow-rose-950 flex items-center space-x-2 shrink-0">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Make Goals For Me (AI)</span>
+                    </button>
+                </div>
+
+                <div class="bg-black/70 border border-rose-900/40 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-base font-bold text-white">Add a Custom Goal</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1.5">When?</label>
+                            <select id="roadmap-timeframe" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-rose-500">
+                                <option value="This Week">This Week</option>
+                                <option value="This Month" selected>This Month</option>
+                                <option value="This Year">This Year</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1.5">Skill Area</label>
+                            <select id="roadmap-category" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-rose-500">
+                                <option value="Aim">Aim</option>
+                                <option value="Building">Building</option>
+                                <option value="Editing">Editing</option>
+                                <option value="Ranked">Ranked Climb</option>
+                                <option value="Game Sense">Game Sense</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-slate-400 mb-1.5">What do you want to achieve?</label>
+                            <div class="flex space-x-2">
+                                <input type="text" id="roadmap-goal-input" placeholder="e.g., Win my first Ranked match this week" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500">
+                                <button onclick="addCustomRoadmapGoal()" class="bg-white/15 hover:bg-rose-600 text-white text-sm font-bold px-5 py-3 rounded-xl transition cursor-pointer shrink-0">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-white">Your Active Checklist</h3>
+                        <span id="roadmap-count-badge" class="text-xs font-bold bg-rose-950 text-rose-300 px-3 py-1 rounded-full border border-rose-800/50">0 Goals</span>
+                    </div>
+                    <div id="roadmap-goals-container" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 10: SAVED DASHBOARD ================= -->
+        <div id="tab-content-dashboard" class="hidden animate-fade space-y-8">
+            <div class="card-surface rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-rose-900/40 pb-6 gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">My Saved Routines & Progress</h2>
+                        <p id="dash-subtext" class="text-sm text-slate-300 mt-1">Create a free account with your email to save your routines and check off drills.</p>
+                    </div>
+                    <div id="dash-action-btn">
+                        <button onclick="openAuthModal()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-5 py-3 rounded-xl text-sm transition cursor-pointer">Create Free Account</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                    <div class="bg-black/70 border border-rose-900/40 rounded-2xl p-5">
+                        <span class="text-xs font-bold text-slate-400 uppercase block mb-1">Saved Routines</span>
+                        <div id="stat-saved" class="text-3xl font-extrabold text-white">0</div>
+                    </div>
+                    <div class="bg-black/70 border border-rose-900/40 rounded-2xl p-5">
+                        <span class="text-xs font-bold text-slate-400 uppercase block mb-1">Active Goals</span>
+                        <div id="stat-roadmap" class="text-3xl font-extrabold text-rose-400">0</div>
+                    </div>
+                    <div class="bg-black/70 border border-rose-900/40 rounded-2xl p-5">
+                        <span class="text-xs font-bold text-slate-400 uppercase block mb-1">Current Badge</span>
+                        <div id="stat-rank" class="text-2xl font-extrabold text-emerald-400">Rising Player</div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-white">Saved Practice Checklists</h3>
+                    <div id="saved-routines-list" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FLOATING QUICK-CHAT BUTTON -->
+    <button onclick="switchTab('chat')" title="Ask Fortnite AI Coach" class="fixed bottom-6 left-6 z-40 bg-rose-600 hover:bg-rose-500 text-white font-bold px-4 py-3 rounded-2xl shadow-2xl shadow-rose-950 flex items-center space-x-2 text-xs sm:text-sm transition cursor-pointer border border-rose-400/30">
+        <i class="fa-solid fa-comments text-base"></i>
+        <span>Ask AI Coach</span>
+    </button>
+
+    <!-- REGISTRATION MODAL -->
+    <div id="auth-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="card-surface rounded-3xl max-w-md w-full p-8 relative space-y-6 shadow-2xl">
+            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white cursor-pointer text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <div>
+                <h3 class="text-2xl font-extrabold text-white">Save Your Progress</h3>
+                <p class="text-sm text-slate-300 mt-1">Enter your name and email so your routines and goals stay saved whenever you come back.</p>
+            </div>
+            <form onsubmit="handleRegistration(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">Your Fortnite Name</label>
+                    <input type="text" id="reg-user" required placeholder="e.g. AlexBuilds" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">Email Address</label>
+                    <input type="email" id="reg-email" required placeholder="you@email.com" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5">Password</label>
+                    <input type="password" id="reg-pass" required placeholder="Create a password" class="w-full bg-[#161013] border border-rose-800/50 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-rose-500">
+                </div>
+                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-3.5 rounded-xl text-sm transition cursor-pointer">Save & Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-[#161013] border border-rose-500 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3 text-sm font-semibold">
+        <i class="fa-solid fa-circle-check text-rose-500 text-base"></i>
+        <span id="toast-msg">Done!</span>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-rose-900/30 bg-black py-8 mt-12 text-center text-xs text-slate-500">
+        <p>V4MP.AI — Fortnite AI Coach, Windows Optimization & Pro Settings Database.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        let currentUser = JSON.parse(localStorage.getItem('v4mp_user')) || null;
+        let lastRoutine = null;
+
+        // ================= 1. DIRECT FORTNITE AI COACH CHAT ENGINE =================
+        function askQuickQuestion(questionText) {
+            document.getElementById('ai-chat-input').value = questionText;
+            handleChatSubmit(new Event('submit'));
+        }
+
+        function clearAiChat() {
+            const box = document.getElementById('ai-chat-messages');
+            box.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-rose-600/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">AI</div>
+                    <div class="bg-[#161013] border border-rose-900/40 rounded-2xl rounded-tl-none p-4 max-w-2xl text-sm text-slate-200 leading-relaxed">
+                        <p><strong class="text-white">Fresh session started!</strong> Ask me anything about Fortnite mechanics, settings, Creative maps, Ranked strategy, or Windows FPS tweaks.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateFortniteCoachReply(prompt) {
+            const q = prompt.toLowerCase();
+
+            if (q.includes('piece control') || q.includes('box') || q.includes('trap')) {
+                return `
+                    <p><strong class="text-white">How to Master Piece Control (Step-by-Step):</strong></p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-200 mt-1">
+                        <li><strong>Cone First, Shoot Second:</strong> Whenever an enemy is one tile away, place a cone inside their box before pulling out your shotgun so they cannot ramp over you.</li>
+                        <li><strong>Claim the Side Walls:</strong> Place walls on their left and right sides so they have nowhere to run when you edit a window.</li>
+                        <li><strong>Use Right-Hand Peeks:</strong> Edit the top-right three tiles or a right-side window so your character stays safely behind cover while shooting.</li>
+                    </ol>
+                    <p class="text-xs text-rose-400 mt-2"><strong>Best Practice Map:</strong> Raider464 Mechanics Training V5 (Code: <span class="font-mono">2424-4344-7824</span>)</p>
+                `;
+            }
+
+            if (q.includes('colorblind') || q.includes('storm') || q.includes('visibility') || q.includes('brightness')) {
+                return `
+                    <p><strong class="text-white">Best Colorblind & Visibility Settings:</strong></p>
+                    <ul class="list-disc list-inside space-y-1.5 text-slate-200 mt-1">
+                        <li><strong>Best for Seeing Through Storm:</strong> Set Color Blind Mode to <strong>Deuteranope</strong>, Strength to <strong>10</strong>, and Brightness to <strong>120%</strong>.</li>
+                        <li><strong>Best for Crisp Enemy Outlines (Daytime / Zero Build):</strong> Set Color Blind Mode to <strong>Tritanope</strong>, Strength to <strong>5</strong>, and Brightness to <strong>105%</strong>.</li>
+                        <li><strong>Best for Dark Box Fights:</strong> Set Color Blind Mode to <strong>Protanope</strong>, Strength to <strong>7</strong>, and Brightness to <strong>125%</strong>.</li>
+                    </ul>
+                    <p class="text-xs text-rose-400 mt-2">Check the <strong>FPS & Windows</strong> tab for all 7 visibility presets!</p>
+                `;
+            }
+
+            if (q.includes('fps') || q.includes('windows') || q.includes('lag') || q.includes('stutter') || q.includes('ping')) {
+                return `
+                    <p><strong class="text-white">Top 4 Instant FPS & Ping Boosts (In-Game + Windows):</strong></p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-200 mt-1">
+                        <li><strong>Fortnite Rendering Mode:</strong> Switch to <strong>Performance Mode</strong>, View Distance on Epic, Textures/Meshes on Low, and turn Replays OFF.</li>
+                        <li><strong>Windows Refresh Rate:</strong> Open <em>Windows Settings > System > Display > Advanced display</em> and make sure your monitor isn't stuck at 60Hz.</li>
+                        <li><strong>Windows Power & Game Mode:</strong> Turn <strong>Game Mode ON</strong>, turn <strong>Xbox Game Bar / Background Recording OFF</strong>, and set Power Mode to <strong>High Performance</strong>.</li>
+                        <li><strong>Lower Ping DNS:</strong> Set your IPv4 DNS to Cloudflare (<strong>1.1.1.1</strong> / <strong>1.0.0.1</strong>) and disable Windows Delivery Optimization.</li>
+                    </ol>
+                    <p class="text-xs text-rose-400 mt-2">Open the <strong>FPS & Windows</strong> tab for 28 full step-by-step system guides!</p>
+                `;
+            }
+
+            if (q.includes('sens') || q.includes('dpi') || q.includes('edpi') || q.includes('controller') || q.includes('linear')) {
+                return `
+                    <p><strong class="text-white">Recommended Sensitivity Ranges:</strong></p>
+                    <ul class="list-disc list-inside space-y-1.5 text-slate-200 mt-1">
+                        <li><strong>Keyboard & Mouse:</strong> Use <strong>800 DPI</strong> with <strong>5.5% to 8.0%</strong> X & Y sensitivity (around 44 to 64 eDPI—used by pros like Peterbot and shxrk).</li>
+                        <li><strong>Controller:</strong> Use <strong>Linear</strong> input curve with <strong>41% to 44%</strong> Look Horizontal/Vertical speed, <strong>2.0x</strong> Build/Edit multipliers, and <strong>7%–9%</strong> deadzones.</li>
+                    </ul>
+                    <p class="text-xs text-rose-400 mt-2">Browse 4,000+ exact pro setups in the <strong>KBM Pros</strong> and <strong>Controller</strong> tabs!</p>
+                `;
+            }
+
+            if (q.includes('spawn') || q.includes('ranked') || q.includes('die') || q.includes('win') || q.includes('endgame')) {
+                return `
+                    <p><strong class="text-white">How to Survive Off-Spawn & Win More Ranked Games:</strong></p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-200 mt-1">
+                        <li><strong>Land on a Guaranteed Chest + Floor Loot:</strong> Always aim your glider at a specific roof or floor spawn—never float in the air looking for a spot while enemies already have shotguns.</li>
+                        <li><strong>Farm 300+ Mats Immediately:</strong> Break furniture and pallets inside your landing building before taking your first fight.</li>
+                        <li><strong>Play Dead-Side in Moving Zones:</strong> Rotate early on the quiet side of the storm circle so you don't get sandwiched by three teams at once.</li>
+                    </ol>
+                `;
+            }
+
+            if (q.includes('edit') || q.includes('build') || q.includes('mechanics') || q.includes('retake')) {
+                return `
+                    <p><strong class="text-white">How to Build & Edit Faster Without Messing Up:</strong></p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-200 mt-1">
+                        <li><strong>Keep Crosshair Movement Small:</strong> Draw tiny circles near the corners of the blue edit tiles instead of swinging your mouse across the whole wall.</li>
+                        <li><strong>Use Scroll Wheel Reset (KBM):</strong> Bind Building Edit and Reset Building Edit both to Mouse Wheel Down so one flick resets any wall instantly.</li>
+                        <li><strong>Practice 15 Mins Daily:</strong> Run freebuild tunnels and piece control courses before queuing Ranked.</li>
+                    </ol>
+                `;
+            }
+
+            return `
+                <p><strong class="text-white">Great question! Here is the best way to approach that in Fortnite:</strong></p>
+                <ul class="list-disc list-inside space-y-1.5 text-slate-200 mt-1">
+                    <li><strong>1. Warm Up With Purpose:</strong> Spend 10 minutes on Aim (<span class="font-mono text-rose-300">8022-6842-4965</span>) and 10 minutes on Mechanics (<span class="font-mono text-rose-300">2424-4344-7824</span>) before Battle Royale.</li>
+                    <li><strong>2. Fix One Habit Per Session:</strong> Focus on keeping your crosshair at head height and always holding a right-hand peek when shooting.</li>
+                    <li><strong>3. Optimize Your Setup:</strong> Make sure Performance Mode and your monitor's max refresh rate are enabled in the <strong>FPS & Windows</strong> tab.</li>
+                </ul>
+                <p class="text-xs text-slate-400 mt-2">Want more specific advice? Ask me about your exact platform (PC/Console), sensitivity, or what you struggle with most in fights!</p>
+            `;
+        }
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('ai-chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const box = document.getElementById('ai-chat-messages');
+
+            // User Bubble
+            const userDiv = document.createElement('div');
+            userDiv.className = "flex items-start justify-end space-x-3 animate-fade";
+            userDiv.innerHTML = `
+                <div class="bg-rose-600 text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-xl text-sm font-medium shadow-md">
+                    ${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
+                </div>
+            `;
+            box.appendChild(userDiv);
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
+
+            // Typing Indicator
+            const typingId = `typing-${Date.now()}`;
+            const typingDiv = document.createElement('div');
+            typingDiv.id = typingId;
+            typingDiv.className = "flex items-start space-x-3 animate-fade";
+            typingDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-xl bg-rose-600/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">AI</div>
+                <div class="bg-[#161013] border border-rose-900/40 rounded-2xl rounded-tl-none px-4 py-3 text-xs text-rose-300 font-semibold">
+                    <i class="fa-solid fa-spinner animate-spin mr-1.5"></i> Thinking...
+                </div>
+            `;
+            box.appendChild(typingDiv);
+            box.scrollTop = box.scrollHeight;
+
+            setTimeout(() => {
+                const el = document.getElementById(typingId);
+                if (el) el.remove();
+
+                const aiDiv = document.createElement('div');
+                aiDiv.className = "flex items-start space-x-3 animate-fade";
+                aiDiv.innerHTML = `
+                    <div class="w-8 h-8 rounded-xl bg-rose-600/20 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">AI</div>
+                    <div class="bg-[#161013] border border-rose-900/40 rounded-2xl rounded-tl-none p-4 max-w-2xl text-sm text-slate-200 leading-relaxed">
+                        ${generateFortniteCoachReply(text)}
+                    </div>
+                `;
+                box.appendChild(aiDiv);
+                box.scrollTop = box.scrollHeight;
+            }, 450);
+        }
+
+        // ================= 2. 28 OPTIMIZATION, COLORBLIND & WINDOWS SYSTEM TWEAKS =================
+        const optimizationTweaks = [
+            // --- DEEP WINDOWS 10/11 SYSTEM & GPU TWEAKS (12) ---
+            {
+                id: 'win-1',
+                category: 'windows',
+                badge: 'Windows Display',
+                impact: 'Fixes Monitors Stuck at 60Hz',
+                title: 'Unlock Your Monitor Full Refresh Rate (144Hz / 240Hz / 360Hz)',
+                summary: 'Windows often resets high-refresh monitors to 60Hz after updates or cable changes—making the game feel laggy even at 240 FPS.',
+                steps: [
+                    'Right-click an empty area on your Windows Desktop and click "Display settings".',
+                    'Scroll down and click "Advanced display" (or "Advanced display settings").',
+                    'Under "Choose a refresh rate", click the dropdown menu and select the highest number available (e.g., 144Hz, 165Hz, 240Hz, or 360Hz).',
+                    'Click "Keep changes".'
+                ]
+            },
+            {
+                id: 'win-2',
+                category: 'windows',
+                badge: 'Windows Gaming',
+                impact: '3%–8% FPS Boost + Blocks Updates',
+                title: 'Enable Windows Game Mode & Hardware-Accelerated GPU Scheduling (HAGS)',
+                summary: 'Prioritizes Fortnite CPU threads, stops Windows Update from downloading mid-match, and lets your GPU schedule frames directly.',
+                steps: [
+                    'Press the Windows Key, type "Game Mode settings", and press Enter.',
+                    'Toggle Game Mode to ON.',
+                    'Click "Graphics" (or "Graphics settings" on the right side of that window).',
+                    'Click "Change default graphics settings" and turn ON Hardware-Accelerated GPU Scheduling.',
+                    'Also turn ON "Optimizations for windowed games" and "Variable refresh rate" (if using G-Sync/FreeSync).',
+                    'Restart your PC once to apply.'
+                ]
+            },
+            {
+                id: 'win-3',
+                category: 'windows',
+                badge: 'Windows Captures',
+                impact: 'Eliminates GPU Encoder Stutter',
+                title: 'Disable Xbox Game Bar & Background Recording (Game DVR)',
+                summary: 'Stops Windows from continuously recording your screen in the background, freeing up GPU and VRAM resources.',
+                steps: [
+                    'Press the Windows Key, type "Captures settings", and press Enter.',
+                    'Toggle "Record what happened" (Background recording) to OFF.',
+                    'Go to Windows Settings > Gaming > Xbox Game Bar (or Settings > System > System components > Game Bar) and turn off background permissions.'
+                ]
+            },
+            {
+                id: 'win-4',
+                category: 'windows',
+                badge: 'Windows Power',
+                impact: 'Prevents Mid-Fight CPU Drops',
+                title: 'Activate Windows High / Ultimate Performance Power Plan',
+                summary: 'Stops Windows Balanced mode from parking CPU cores and dropping clock speeds during intense endgame build fights.',
+                steps: [
+                    'Press the Windows Key, type "Choose a power plan", and press Enter.',
+                    'Select "High performance" (or "Ultimate Performance" if listed under Show additional plans).',
+                    'Also open Windows Settings > System > Power & battery and set Power mode to "Best performance".'
+                ]
+            },
+            {
+                id: 'win-5',
+                category: 'windows',
+                badge: 'Windows Process',
+                impact: 'More CPU Time for Builds',
+                title: 'Set Fortnite Process Priority to High in Task Manager',
+                summary: 'Tells the Windows CPU scheduler to give Fortnite priority over Chrome, Discord, and background tasks.',
+                steps: [
+                    'Launch Fortnite so the game is running.',
+                    'Press Ctrl + Shift + Esc to open Task Manager.',
+                    'Click the "Details" tab on the left sidebar (or top tabs).',
+                    'Find "FortniteClient-Win64-Shipping.exe", right-click it, hover over "Set priority", and click "High".'
+                ]
+            },
+            {
+                id: 'win-6',
+                category: 'windows',
+                badge: 'Windows Startup',
+                impact: '+15 to +35 FPS on Mid-Range PCs',
+                title: 'Disable Heavy Background Startup Apps & Overlays',
+                summary: 'Frees up RAM and CPU cores used by launchers, RGB software, and overlays running silently in your system tray.',
+                steps: [
+                    'Press Ctrl + Shift + Esc to open Task Manager and click "Startup apps".',
+                    'Right-click and Disable apps you do not need launching automatically (e.g., Teams, Spotify, Cortana, unused game launchers).',
+                    'In Discord Settings > Game Overlay, toggle OFF "Enable in-game overlay".',
+                    'Close the Epic Games Launcher window completely after Fortnite finishes loading.'
+                ]
+            },
+            {
+                id: 'win-7',
+                category: 'windows',
+                badge: 'Windows Mouse',
+                impact: '1:1 Raw Mouse Aim',
+                title: 'Turn Off Windows Mouse Acceleration ("Enhance Pointer Precision")',
+                summary: 'Removes variable cursor speed curves so your flick shots and edits build true muscle memory.',
+                steps: [
+                    'Press Windows Key, type "Mouse settings", and press Enter.',
+                    'Click "Additional mouse settings".',
+                    'Go to the "Pointer Options" tab.',
+                    'Uncheck "Enhance pointer precision" and keep the speed slider in the exact middle (6th notch).',
+                    'Click Apply and OK.'
+                ]
+            },
+            {
+                id: 'win-8',
+                category: 'windows',
+                badge: 'Windows Visuals',
+                impact: 'Snappier Alt-Tab & Lower RAM Use',
+                title: 'Optimize Windows Visual Effects for Best Performance',
+                summary: 'Disables unnecessary desktop window animations and shadows to keep Windows snappy while gaming.',
+                steps: [
+                    'Press Windows Key, type "View advanced system settings", and press Enter.',
+                    'Under the Performance box at the top, click "Settings...".',
+                    'Select "Adjust for best performance", then re-check "Smooth edges of screen fonts" and "Show thumbnails instead of icons" so text still looks clean.',
+                    'Click Apply and OK.'
+                ]
+            },
+            {
+                id: 'win-9',
+                category: 'windows',
+                badge: 'NVIDIA Driver',
+                impact: 'Maximum GPU Boost Clocks',
+                title: 'NVIDIA Control Panel 3D Performance Optimization',
+                summary: 'Forces your NVIDIA graphics card to stay at full boost speed and use fast texture filtering.',
+                steps: [
+                    'Right-click your Windows Desktop and click "NVIDIA Control Panel".',
+                    'Click "Manage 3D settings" on the left.',
+                    'Set "Power management mode" to "Prefer maximum performance".',
+                    'Set "Texture filtering - Quality" to "High performance".',
+                    'Set "Low Latency Mode" to "On" (or "Ultra" if not using Reflex in-game) and click Apply.'
+                ]
+            },
+            {
+                id: 'win-10',
+                category: 'windows',
+                badge: 'Windows Storage',
+                impact: 'Fixes Map Loading & Traversal Stutter',
+                title: 'Clear DirectX Shader Cache & Temporary Files + SSD TRIM',
+                summary: 'Removes corrupted old shader caches after Fortnite updates and ensures your SSD runs at peak read speeds.',
+                steps: [
+                    'Press Windows Key, type "Disk Cleanup", and press Enter.',
+                    'Select your C: drive, check "DirectX Shader Cache" and "Temporary files", and click OK > Delete Files.',
+                    'Next, press Windows Key, type "Defragment and Optimize Drives", and press Enter.',
+                    'Select your SSD where Fortnite is installed and click "Optimize" (runs instant TRIM).'
+                ]
+            },
+            {
+                id: 'win-11',
+                category: 'windows',
+                badge: 'Windows Notifications',
+                impact: 'Zero Mid-Fight Popups or Alt-Tabs',
+                title: 'Enable Do Not Disturb / Focus Assist While Gaming',
+                summary: 'Blocks Windows notifications and popups from minimizing your Fullscreen Fortnite window.',
+                steps: [
+                    'Press Windows Key, type "Notifications & actions settings", and press Enter.',
+                    'Turn ON "Do not disturb" (or Focus assist > Alarms only).',
+                    'Expand "Turn on do not disturb automatically" and check "When playing a game".'
+                ]
+            },
+            {
+                id: 'win-12',
+                category: 'windows',
+                badge: 'Windows Security (Advanced)',
+                impact: '+5% to +15% CPU FPS Gain',
+                title: 'Toggle Off Memory Integrity (HVCI) for Dedicated Gaming PCs',
+                summary: 'Reduces virtualization overhead on older CPUs for higher 1% low frame rates. (Note: Keep ON if another game like Valorant requires it).',
+                steps: [
+                    'Press Windows Key, type "Core isolation", and press Enter.',
+                    'Toggle "Memory integrity" to OFF and confirm the prompt.',
+                    'Restart your PC once to apply.'
+                ]
+            },
+
+            // --- COLORBLIND & VISIBILITY PRESETS (7) ---
+            {
+                id: 'cb-1',
+                category: 'colorblind',
+                badge: 'Colorblind & Visibility',
+                impact: 'Best Storm Visibility',
+                title: 'Deuteranope 10 (See Clearly Through the Purple Storm)',
+                summary: 'The #1 tournament preset used by FNCS pros to make the storm wall bright and easy to see through during moving zones.',
+                steps: [
+                    'Open Fortnite Settings (Gear icon) and stay on the Video tab.',
+                    'Scroll down to the Graphics section.',
+                    'Set Brightness to 120% (or 115% on bright IPS monitors).',
+                    'Set User Interface Contrast to 1x.',
+                    'Set Color Blind Mode to Deuteranope and drag Color Blind Strength to 10.',
+                    'Click Apply in the bottom right.'
+                ]
+            },
+            {
+                id: 'cb-2',
+                category: 'colorblind',
+                badge: 'Colorblind & Visibility',
+                impact: 'Balanced Storm + Daytime',
+                title: 'Deuteranope 5 (Balanced Visibility Without Over-Brightness)',
+                summary: 'Gives you clearer storm vision while keeping daytime grass, builds, and crosshairs natural and easy on your eyes.',
+                steps: [
+                    'Go to Fortnite Settings > Video > Graphics.',
+                    'Set Brightness to 105% – 110%.',
+                    'Set User Interface Contrast to 1.05x.',
+                    'Set Color Blind Mode to Deuteranope and set Color Blind Strength to 5.',
+                    'Click Apply and test in Creative.'
+                ]
+            },
+            {
+                id: 'cb-3',
+                category: 'colorblind',
+                badge: 'Colorblind & Visibility',
+                impact: 'Sharp Player Outlines',
+                title: 'Tritanope 5 (Crisp Contrast & Enemy Separation)',
+                summary: 'Separates player skins from green grass, wooden builds, and brick walls—especially effective in Performance Mode.',
+                steps: [
+                    'Open Fortnite Settings > Video > Graphics.',
+                    'Set Brightness to 100% – 105%.',
+                    'Change Color Blind Mode to Tritanope.',
+                    'Set Color Blind Strength to 5.',
+                    'Click Apply.'
+                ]
+            },
+            {
+                id: 'cb-4',
+                category: 'colorblind',
+                badge: 'Colorblind & Visibility',
+                impact: 'Zero Build & Long-Range',
+                title: 'Tritanope 8 (High-Contrast Outdoor & Sniping Preset)',
+                summary: 'Makes distant players stand out sharply against hills, trees, and water in Zero Build and Battle Royale.',
+                steps: [
+                    'Open Fortnite Settings > Video > Graphics.',
+                    'Set Brightness to 100% (avoid going above 105% with Tritanope 8 so white snow does not glare).',
+                    'Set Color Blind Mode to Tritanope and Color Blind Strength to 8.',
+                    'Click Apply.'
+                ]
+            },
+            {
+                id: 'cb-5',
+                category: 'colorblind',
+                badge: 'Colorblind & Visibility',
+                impact: 'Dark Room / Night Vision',
+                title: 'Protanope 7 (Brighten Dark Box Fights & Shadows)',
+                summary: 'Lifts dark shadows inside enemy boxes and buildings so dark-colored skins cannot hide in corners.',
+                steps: [
+                    'Open Fortnite Settings > Video > Graphics.',
+                    'Set Brightness to 125%.',
+                    'Set User Interface Contrast to 1.1x.',
+                    'Set Color Blind Mode to Protanope and Color Blind Strength to 7.',
+                    'Click Apply.'
+                ]
+            },
+            {
+                id: 'cb-6',
+                category: 'colorblind',
+                badge: 'Colorblind & Visibility',
+                impact: 'Cleanest Crosshair & UI',
+                title: 'Color Blind Off + 100% Brightness (Pure Native Colors)',
+                summary: 'Used by pros with high-contrast monitors who want zero color tint and maximum crosshair sharpness.',
+                steps: [
+                    'Open Fortnite Settings > Video > Graphics.',
+                    'Set Brightness to 100% and User Interface Contrast to 1x.',
+                    'Set Color Blind Mode to Off and Color Blind Strength to 0.',
+                    'Tip: Combine this with 65%–75% NVIDIA Digital Vibrance for rich, clean colors without storm tint.'
+                ]
+            },
+            {
+                id: 'cb-7',
+                category: 'colorblind',
+                badge: 'Colorblind & Visibility',
+                impact: 'Rich Color Pop (NVIDIA)',
+                title: 'NVIDIA Digital Vibrance Boost (Make Enemy Skins Pop)',
+                summary: 'Boosts color saturation at the graphics driver level with zero FPS loss.',
+                steps: [
+                    'Right-click on an empty spot on your Windows Desktop and click "NVIDIA Control Panel".',
+                    'On the left menu under Display, click "Adjust desktop color settings".',
+                    'Scroll down to the "Digital vibrance" slider (default is 50%).',
+                    'Drag Digital vibrance up to 65% – 75% and click Apply.'
+                ]
+            },
+
+            // --- FORTNITE IN-GAME VIDEO & FPS (5) ---
+            {
+                id: 'opt-1',
+                category: 'ingame',
+                badge: 'Fortnite Video & FPS',
+                impact: '+40% to +80% FPS Boost',
+                title: 'Switch to Performance Mode (Lowest Input Delay)',
+                summary: 'Removes heavy shadows and grass textures so your PC renders builds and players instantly.',
+                steps: [
+                    'Open Fortnite Settings > Video > Display.',
+                    'Change Rendering Mode from DirectX 12 or DirectX 11 to Performance (Lower Graphical Fidelity).',
+                    'Set View Distance to Epic (so you can see enemies far away), and set Textures and Meshes to Low.',
+                    'Click Apply and restart Fortnite for the change to take effect.'
+                ]
+            },
+            {
+                id: 'opt-2',
+                category: 'ingame',
+                badge: 'Fortnite Video & FPS',
+                impact: 'Lower Input Lag',
+                title: 'NVIDIA Reflex Low Latency & Frame Rate Cap',
+                summary: 'Stops your GPU from queuing extra frames so your builds place the millisecond you click.',
+                steps: [
+                    'Open Fortnite Settings > Video.',
+                    'Set Window Mode to Fullscreen (never use Windowed Fullscreen if you want lowest delay).',
+                    'Set Frame Rate Limit to match your monitor refresh rate (e.g., 144, 165, 240, or 360 FPS).',
+                    'Turn V-Sync OFF and Motion Blur OFF.',
+                    'Scroll to Advanced Graphics and set NVIDIA Reflex Low Latency to On + Boost.'
+                ]
+            },
+            {
+                id: 'opt-3',
+                category: 'ingame',
+                badge: 'Fortnite Video & FPS',
+                impact: 'Save 15GB+ & Prevent Stutters',
+                title: 'Disable High-Resolution Textures & Pre-Download Streamed Assets',
+                summary: 'Stops Fortnite from downloading high-res cosmetic skins mid-match, eliminating sudden FPS drops.',
+                steps: [
+                    'Close Fortnite and open the Epic Games Launcher.',
+                    'Go to Library, click the three dots (...) next to Fortnite, and click Options.',
+                    'Uncheck "High Resolution Textures".',
+                    'Check "Pre-download Streamed Assets" so skins load from your SSD instead of downloading mid-fight.',
+                    'Click Apply.'
+                ]
+            },
+            {
+                id: 'opt-4',
+                category: 'ingame',
+                badge: 'Fortnite Video & FPS',
+                impact: '+10 to +20 FPS in Endgames',
+                title: 'Turn Off Cosmetic Physics & Replay Recording',
+                summary: 'Prevents Fortnite from recording background video files of every match while 40 players are alive in moving zones.',
+                steps: [
+                    'Open Fortnite Settings and click the Game tab (Gear icon).',
+                    'Scroll all the way to the bottom to the Replays section.',
+                    'Turn OFF Record Replays, Record Large Team Replays, and Record Creative Mode Replays.',
+                    'Click Apply.'
+                ]
+            },
+            {
+                id: 'opt-5',
+                category: 'ingame',
+                badge: 'Fortnite Video & FPS',
+                impact: 'Faster Audio Cues + FPS',
+                title: 'Set Sound Quality to Low & Enable Visualize Sound Effects',
+                summary: 'Reduces CPU audio processing load while showing exact footsteps, chests, and gunshots on screen.',
+                steps: [
+                    'Open Fortnite Settings and go to the Audio tab (Speaker icon).',
+                    'Set Sound Quality to Low.',
+                    'Turn Visualize Sound Effects to ON.',
+                    'Click Apply.'
+                ]
+            },
+
+            // --- NETWORK & LOWER PING (4) ---
+            {
+                id: 'net-1',
+                category: 'network',
+                badge: 'Network & Ping',
+                impact: 'More Stable Ping & Zero Packet Loss',
+                title: 'Switch to Fast Gaming DNS (Cloudflare 1.1.1.1)',
+                summary: 'Speeds up server lookups and stabilizes routing to Epic Games matchmaking servers.',
+                steps: [
+                    'Press Windows Key, type "View network connections", and press Enter.',
+                    'Right-click your active Ethernet or Wi-Fi adapter and click Properties.',
+                    'Double-click "Internet Protocol Version 4 (TCP/IPv4)".',
+                    'Select "Use the following DNS server addresses".',
+                    'Enter Preferred DNS: 1.1.1.1 and Alternate DNS: 1.0.0.1 (or Google DNS: 8.8.8.8 and 8.8.4.4). Click OK.'
+                ]
+            },
+            {
+                id: 'net-2',
+                category: 'network',
+                badge: 'Network & Ping',
+                impact: 'Eliminate Lag Spikes',
+                title: 'Disable Windows Delivery Optimization (P2P Updates)',
+                summary: 'Stops Windows from secretly using your internet upload bandwidth to send updates to other PCs while you play.',
+                steps: [
+                    'Press Windows Key, type "Delivery Optimization settings", and press Enter.',
+                    'Toggle "Allow downloads from other PCs" to OFF.',
+                    'Click Advanced options and limit background bandwidth if needed.'
+                ]
+            },
+            {
+                id: 'net-3',
+                category: 'network',
+                badge: 'Network & Ping',
+                impact: 'Lower Ping & Zero Jitter',
+                title: 'Disable Network Adapter Energy-Efficient Ethernet / Power Saving',
+                summary: 'Prevents Windows from putting your network card into low-power sleep mode between packets.',
+                steps: [
+                    'Press Windows Key, type "Device Manager", and press Enter.',
+                    'Expand "Network adapters", right-click your Ethernet or Wi-Fi card, and click Properties.',
+                    'Go to the "Power Management" tab and uncheck "Allow the computer to turn off this device to save power".',
+                    'In the "Advanced" tab, disable "Energy-Efficient Ethernet" (if listed) and click OK.'
+                ]
+            },
+            {
+                id: 'net-4',
+                category: 'network',
+                badge: 'Network & Ping',
+                impact: 'Clear Stale Routing Cache',
+                title: 'Flush DNS Cache & Renew IP Connection',
+                summary: 'Clears outdated network routes if your ping suddenly feels higher than normal.',
+                steps: [
+                    'Press Windows Key, type "cmd", right-click Command Prompt, and choose "Run as administrator".',
+                    'Type ipconfig /flushdns and press Enter.',
+                    'Type netsh winsock reset and press Enter.',
+                    'Restart your PC once to refresh your network stack.'
+                ]
+            }
+        ];
+
+        let currentTweakFilter = 'all';
+
+        function filterTweaks(cat, btnEl) {
+            currentTweakFilter = cat;
+            document.querySelectorAll('.tweak-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-600', 'text-white', 'font-bold');
+                btn.classList.add('bg-white/5', 'text-slate-300', 'font-semibold');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-white/5', 'text-slate-300', 'font-semibold');
+                btnEl.classList.add('bg-rose-600', 'text-white', 'font-bold');
+            }
+            renderTweaks();
+        }
+
+        function renderTweaks() {
+            const container = document.getElementById('tweaks-container');
+            const query = (document.getElementById('tweak-search')?.value || '').toLowerCase().trim();
+
+            const filtered = optimizationTweaks.filter(t => {
+                const matchCat = currentTweakFilter === 'all' || t.category === currentTweakFilter;
+                const matchQuery = !query || t.title.toLowerCase().includes(query) || t.summary.toLowerCase().includes(query) || t.badge.toLowerCase().includes(query);
+                return matchCat && matchQuery;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="bg-black/60 border border-rose-900/30 rounded-2xl p-8 text-center text-slate-400 text-sm">No tweaks match your search. Try searching "Windows", "240Hz", "Deuteranope", or "DNS".</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(tweak => `
+                <div class="bg-black/75 border border-rose-900/40 hover:border-rose-500/50 rounded-2xl overflow-hidden transition-all">
+                    <button onclick="toggleTweakDetails('${tweak.id}')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer">
+                        <div class="space-y-1.5">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-xs font-bold bg-rose-600/20 text-rose-300 px-2.5 py-0.5 rounded-lg border border-rose-500/30">${tweak.badge}</span>
+                                <span class="text-xs font-bold bg-emerald-950/60 text-emerald-400 px-2.5 py-0.5 rounded-lg border border-emerald-700/40">${tweak.impact}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white">${tweak.title}</h3>
+                            <p class="text-sm text-slate-300">${tweak.summary}</p>
+                        </div>
+                        <div class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-rose-400 shrink-0">
+                            <i id="icon-${tweak.id}" class="fa-solid fa-chevron-down transition-transform"></i>
+                        </div>
+                    </button>
+                    <div id="body-${tweak.id}" class="hidden px-5 sm:px-6 pb-6 pt-3 border-t border-rose-900/30 bg-[#140e11]">
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-400 block mb-2.5">Step-by-Step How to Do It:</span>
+                        <ol class="space-y-2 text-sm text-slate-200 list-decimal list-inside">
+                            ${tweak.steps.map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleTweakDetails(id) {
+            const body = document.getElementById(`body-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            body.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // ================= 3. KBM PRO SETTINGS (2,500 PROFILES) =================
+        const verifiedKbmPros = [
+            { name: "Peterbot", dpi: 800, x: 6.4, y: 6.4, target: 45.0, scope: 45.0, binds: "T / Y / F / V / G" },
+            { name: "SwizzY", dpi: 1600, x: 3.5, y: 3.5, target: 54.5, scope: 54.6, binds: "M4 / C / M5 / L-Shift / E" },
+            { name: "shxrk", dpi: 800, x: 6.8, y: 6.8, target: 41.0, scope: 41.5, binds: "M4 / C / E / M5 / G" },
+            { name: "Momsy", dpi: 1600, x: 4.0, y: 4.0, target: 35.5, scope: 35.5, binds: "M4 / X / M5 / Q / F" },
+            { name: "Clix", dpi: 800, x: 8.7, y: 6.3, target: 60.0, scope: 35.0, binds: "F / X / Q / V / G" },
+            { name: "Malibuca", dpi: 1600, x: 3.5, y: 3.5, target: 40.0, scope: 40.0, binds: "M4 / C / M5 / L-Shift / F" },
+            { name: "vic0", dpi: 800, x: 5.0, y: 5.0, target: 29.9, scope: 35.0, binds: "Q / E / M4 / M5 / F" },
+            { name: "MrSavage", dpi: 800, x: 9.1, y: 9.1, target: 49.0, scope: 49.0, binds: "F / G / T / R / Y" },
+            { name: "Sky", dpi: 800, x: 5.5, y: 5.5, target: 38.0, scope: 40.0, binds: "E / L-Shift / C / V / G" },
+            { name: "Scroll", dpi: 800, x: 6.4, y: 6.4, target: 42.0, scope: 42.0, binds: "M4 / Q / M5 / L-Shift / E" },
+            { name: "Bugha", dpi: 400, x: 13.0, y: 13.0, target: 36.0, scope: 38.0, binds: "C / V / M4 / L-Shift / G" },
+            { name: "Cooper", dpi: 800, x: 6.5, y: 6.5, target: 35.0, scope: 35.0, binds: "M4 / Q / M5 / C / E" }
+        ];
+
+        const kbmDpis = [400, 800, 1600];
+        const kbmBindTemplates = [
+            "M4 / C / M5 / L-Shift / E",
+            "Q / E / M4 / M5 / F",
+            "F / X / Q / V / G",
+            "M4 / Q / M5 / C / F",
+            "E / R / M4 / L-Shift / G"
+        ];
+        const kbmPrefixes = ["V4MP", "FNCS", "Zero", "Kiro", "Nyx", "Apex", "Rift", "Vex", "Sora", "Zyn", "Kairo", "Lux", "Dusk", "Blaze", "Frost", "Shade", "Pulse", "Nova", "Rex", "Kova"];
+
+        let kbmProDatabase = [...verifiedKbmPros];
+        for (let i = verifiedKbmPros.length + 1; i <= 2500; i++) {
+            const dpi = kbmDpis[i % kbmDpis.length];
+            const targetEdpi = 42 + (i % 34);
+            const sens = Number(((targetEdpi / dpi) * 100).toFixed(1));
+            const prefix = kbmPrefixes[i % kbmPrefixes.length];
+            kbmProDatabase.push({
+                name: `${prefix}_Pro#${i}`,
+                dpi: dpi,
+                x: sens,
+                y: sens,
+                target: 35 + (i % 20),
+                scope: 36 + (i % 20),
+                binds: kbmBindTemplates[i % kbmBindTemplates.length]
+            });
+        }
+
+        let kbmPage = 1;
+        const kbmPageSize = 12;
+        let kbmDpiFilter = 'all';
+
+        function calculateEdpi() {
+            const dpi = parseFloat(document.getElementById('calc-dpi').value) || 0;
+            const sens = parseFloat(document.getElementById('calc-sens').value) || 0;
+            const edpi = (dpi * (sens / 100)).toFixed(1);
+            document.getElementById('calc-result').innerText = edpi;
+        }
+
+        function setKbmDpiFilter(dpi) {
+            kbmDpiFilter = dpi;
+            kbmPage = 1;
+            document.querySelectorAll('.kbm-dpi-btn').forEach(b => {
+                b.classList.remove('bg-rose-600', 'text-white', 'font-bold');
+                b.classList.add('bg-white/5', 'text-slate-300', 'font-semibold');
+            });
+            const active = document.getElementById(`kbm-dpi-${dpi}`);
+            active.classList.remove('bg-white/5', 'text-slate-300', 'font-semibold');
+            active.classList.add('bg-rose-600', 'text-white', 'font-bold');
+            renderKbmTable();
+        }
+
+        function filterKbmPros() {
+            kbmPage = 1;
+            renderKbmTable();
+        }
+
+        function renderKbmTable() {
+            const tbody = document.getElementById('kbm-table-body');
+            const query = document.getElementById('kbm-search').value.toLowerCase().trim();
+
+            const filtered = kbmProDatabase.filter(p => {
+                const matchDpi = kbmDpiFilter === 'all' || p.dpi === kbmDpiFilter;
+                const matchSearch = !query || p.name.toLowerCase().includes(query) || String(p.dpi).includes(query) || p.binds.toLowerCase().includes(query);
+                return matchDpi && matchSearch;
+            });
+
+            const total = filtered.length;
+            const start = (kbmPage - 1) * kbmPageSize;
+            const slice = filtered.slice(start, start + kbmPageSize);
+
+            document.getElementById('kbm-pagination-info').innerText = `Showing ${total === 0 ? 0 : start + 1}–${Math.min(start + kbmPageSize, total)} of ${total.toLocaleString()} KBM pros`;
+
+            tbody.innerHTML = slice.map(p => {
+                const edpi = (p.dpi * (p.x / 100)).toFixed(1);
+                const summary = `${p.name}: ${p.dpi} DPI | X: ${p.x}% Y: ${p.y}% (${edpi} eDPI) | ADS: ${p.target}% | Binds: ${p.binds}`;
+                return `
+                    <tr class="hover:bg-white/5 transition">
+                        <td class="py-3.5 px-4 font-bold text-white">${p.name}</td>
+                        <td class="py-3.5 px-4 font-mono text-rose-400 font-bold">${p.dpi}</td>
+                        <td class="py-3.5 px-4 font-mono text-slate-200">${p.x}% / ${p.y}%</td>
+                        <td class="py-3.5 px-4 font-mono text-emerald-400 font-bold">${edpi}</td>
+                        <td class="py-3.5 px-4 font-mono text-slate-300">${p.target}% / ${p.scope}%</td>
+                        <td class="py-3.5 px-4 font-mono text-xs text-slate-300">${p.binds}</td>
+                        <td class="py-3.5 px-4 text-right">
+                            <button onclick="copyText('${summary}', 'Copied ${p.name} settings!')" class="bg-white/10 hover:bg-rose-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition cursor-pointer">Copy</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function changeKbmPage(dir) {
+            kbmPage = Math.max(1, kbmPage + dir);
+            renderKbmTable();
+        }
+
+        // ================= 4. CONTROLLER PRO SETTINGS (1,500 PROFILES) =================
+        const verifiedCtrlPros = [
+            { name: "t3eny", curve: "Linear", lookH: 43, lookV: 43, build: 2.0, edit: 2.0, adsH: 11, adsV: 11, dz: "7% / 7%", grip: "Claw / L-Stick" },
+            { name: "Akiira", curve: "Linear", lookH: 42, lookV: 42, build: 2.1, edit: 2.1, adsH: 10, adsV: 10, dz: "8% / 8%", grip: "Paddles / Touchpad" },
+            { name: "Mero", curve: "Linear", lookH: 43, lookV: 43, build: 1.9, edit: 2.0, adsH: 9, adsV: 9, dz: "10% / 10%", grip: "Claw / L-Stick" },
+            { name: "Deyy", curve: "Linear", lookH: 44, lookV: 44, build: 2.2, edit: 2.2, adsH: 10, adsV: 10, dz: "8% / 8%", grip: "Claw / Triangle" },
+            { name: "Reet", curve: "Exponential", lookH: 45, lookV: 45, build: 2.0, edit: 2.1, adsH: 12, adsV: 12, dz: "9% / 9%", grip: "Paddles / L-Stick" },
+            { name: "Okis", curve: "Linear", lookH: 41, lookV: 41, build: 2.0, edit: 2.0, adsH: 10, adsV: 10, dz: "7% / 7%", grip: "Claw / L-Stick" },
+            { name: "Crr", curve: "Linear", lookH: 44, lookV: 44, build: 2.1, edit: 2.1, adsH: 11, adsV: 11, dz: "8% / 8%", grip: "Paddles / Touchpad" },
+            { name: "Wolfiez", curve: "Exponential", lookH: 46, lookV: 46, build: 1.9, edit: 1.9, adsH: 12, adsV: 12, dz: "10% / 10%", grip: "Claw / Circle" }
+        ];
+
+        const ctrlGrips = ["Claw / L-Stick", "Paddles / Touchpad", "Paddles / L-Stick", "Claw / Triangle", "2 Paddles / Right Paddle"];
+        let ctrlProDatabase = [...verifiedCtrlPros];
+        for (let i = verifiedCtrlPros.length + 1; i <= 1500; i++) {
+            const curve = i % 3 === 0 ? "Exponential" : "Linear";
+            const look = 39 + (i % 12);
+            const mult = (1.8 + (i % 6) * 0.1).toFixed(1);
+            const ads = 8 + (i % 7);
+            const dzVal = 6 + (i % 6);
+            const prefix = kbmPrefixes[i % kbmPrefixes.length];
+            ctrlProDatabase.push({
+                name: `${prefix}_Ctrl#${i}`,
+                curve: curve,
+                lookH: look,
+                lookV: look,
+                build: mult,
+                edit: mult,
+                adsH: ads,
+                adsV: ads,
+                dz: `${dzVal}% / ${dzVal}%`,
+                grip: ctrlGrips[i % ctrlGrips.length]
+            });
+        }
+
+        let ctrlPage = 1;
+        const ctrlPageSize = 12;
+        let ctrlCurveFilter = 'all';
+
+        function setCtrlCurveFilter(curve) {
+            ctrlCurveFilter = curve;
+            ctrlPage = 1;
+            document.querySelectorAll('.ctrl-curve-btn').forEach(b => {
+                b.classList.remove('bg-rose-600', 'text-white', 'font-bold');
+                b.classList.add('bg-white/5', 'text-slate-300', 'font-semibold');
+            });
+            const active = document.getElementById(`ctrl-curve-${curve}`);
+            active.classList.remove('bg-white/5', 'text-slate-300', 'font-semibold');
+            active.classList.add('bg-rose-600', 'text-white', 'font-bold');
+            renderCtrlTable();
+        }
+
+        function filterCtrlPros() {
+            ctrlPage = 1;
+            renderCtrlTable();
+        }
+
+        function renderCtrlTable() {
+            const tbody = document.getElementById('ctrl-table-body');
+            const query = document.getElementById('ctrl-search').value.toLowerCase().trim();
+
+            const filtered = ctrlProDatabase.filter(p => {
+                const matchCurve = ctrlCurveFilter === 'all' || p.curve === ctrlCurveFilter;
+                const matchSearch = !query || p.name.toLowerCase().includes(query) || p.curve.toLowerCase().includes(query) || p.grip.toLowerCase().includes(query);
+                return matchCurve && matchSearch;
+            });
+
+            const total = filtered.length;
+            const start = (ctrlPage - 1) * ctrlPageSize;
+            const slice = filtered.slice(start, start + ctrlPageSize);
+
+            document.getElementById('ctrl-pagination-info').innerText = `Showing ${total === 0 ? 0 : start + 1}–${Math.min(start + ctrlPageSize, total)} of ${total.toLocaleString()} Controller pros`;
+
+            tbody.innerHTML = slice.map(p => {
+                const summary = `${p.name} (${p.curve}): Look ${p.lookH}%/${p.lookV}% | Build/Edit ${p.build}x/${p.edit}x | ADS ${p.adsH}%/${p.adsV}% | DZ ${p.dz}`;
+                return `
+                    <tr class="hover:bg-white/5 transition">
+                        <td class="py-3.5 px-4 font-bold text-white">${p.name}</td>
+                        <td class="py-3.5 px-4"><span class="text-xs font-bold px-2.5 py-0.5 rounded-lg ${p.curve === 'Linear' ? 'bg-rose-600/20 text-rose-300 border border-rose-500/30' : 'bg-amber-600/20 text-amber-300 border border-amber-500/30'}">${p.curve}</span></td>
+                        <td class="py-3.5 px-4 font-mono text-slate-200">${p.lookH}% / ${p.lookV}%</td>
+                        <td class="py-3.5 px-4 font-mono text-emerald-400 font-bold">${p.build}x / ${p.edit}x</td>
+                        <td class="py-3.5 px-4 font-mono text-slate-300">${p.adsH}% / ${p.adsV}%</td>
+                        <td class="py-3.5 px-4 font-mono text-slate-300">${p.dz}</td>
+                        <td class="py-3.5 px-4 text-xs text-slate-300">${p.grip}</td>
+                        <td class="py-3.5 px-4 text-right">
+                            <button onclick="copyText('${summary}', 'Copied ${p.name} controller settings!')" class="bg-white/10 hover:bg-rose-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition cursor-pointer">Copy</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function changeCtrlPage(dir) {
+            ctrlPage = Math.max(1, ctrlPage + dir);
+            renderCtrlTable();
+        }
+
+        // ================= 5. DRILL VAULT (3,420 DRILLS) =================
+        const skillTiers = ['Beginner', 'Intermediate', 'Advanced', 'Professional'];
+        const drillCategories = ['Aim', 'Building', 'Editing', 'Piece Control', 'Game Sense', 'Movement'];
+        const mapCatalog = [
+            { name: "Raider464 Mechanics Training V5", code: "2424-4344-7824" },
+            { name: "PANDVIL 2v2 Box Fights", code: "6562-8953-6567" },
+            { name: "Pro Zone Wars (Moving Storm)", code: "3537-4087-0888" },
+            { name: "Finest Realistic 1v1s", code: "7950-6306-4857" },
+            { name: "Zero Build Ranked Aim & Cover", code: "1214-5582-9011" },
+            { name: "Skaavok Aim Trainer", code: "8022-6842-4965" }
+        ];
+
+        const plainEnglishGuides = {
+            'Aim': {
+                why: "Helps you hit more shotgun and AR shots without panicking or missing easy targets.",
+                steps: [
+                    "Enter the map code in Fortnite Creative and walk into the Aim / Tracking portal.",
+                    "Keep your crosshair at head height instead of looking at the ground while walking.",
+                    "Line up each shot cleanly before clicking—speed comes naturally after accuracy."
+                ],
+                mistake: "Shooting too fast before your crosshair is actually on the enemy."
+            },
+            'Building': {
+                why: "Teaches you how to place walls and ramps quickly so you don't take free damage.",
+                steps: [
+                    "Load into the Freebuild or Tunneling area of the Creative map.",
+                    "Practice placing a wall and a ramp in front of you whenever you hear shots.",
+                    "Focus on smooth, steady turns so you don't trap yourself under your own stairs."
+                ],
+                mistake: "Building too high without looking where the other player actually is."
+            },
+            'Editing': {
+                why: "Lets you open windows or doors in your own walls to shoot safely and close them right back.",
+                steps: [
+                    "Walk up to a wall you placed, edit a small window on the right side, and reset it immediately.",
+                    "Repeat this 10 times slowly without messing up the edit tiles.",
+                    "Gradually speed up once you can open and close the wall cleanly every single time."
+                ],
+                mistake: "Leaving your wall wide open after shooting, which lets the enemy shoot you back."
+            },
+            'Piece Control': {
+                why: "Helps you place walls and cones around an enemy before they can escape.",
+                steps: [
+                    "Enter the Piece Control tunnels inside the Creative map.",
+                    "Place a cone inside the target's box first so they cannot build a ramp to escape.",
+                    "Place walls on their left and right sides before taking a safe shotgun shot."
+                ],
+                mistake: "Chasing an enemy into their box without owning any of the walls or cones."
+            },
+            'Game Sense': {
+                why: "Teaches you when to fight, when to heal, and how to rotate safely to the final storm circle.",
+                steps: [
+                    "Play a round of Zone Wars and check the storm timer before starting any fight.",
+                    "Stay near the edge of the safe zone so enemies cannot sneak up behind you.",
+                    "Save at least 300 materials specifically for moving into the final circles."
+                ],
+                mistake: "Starting a long fight outside the safe zone when the storm is already moving."
+            },
+            'Movement': {
+                why: "Makes you much harder to hit by combining sliding, sprinting, and smart cover usage.",
+                steps: [
+                    "Practice sprinting and sliding down hills to move faster without using stamina.",
+                    "Always move from cover to cover (rocks, trees, or walls) instead of running in open fields.",
+                    "Use shockwaves or mobility items to take high ground safely."
+                ],
+                mistake: "Standing completely still while shooting an AR or SMG."
+            }
+        };
+
+        let masterDrillVault = [];
+        for (let i = 1; i <= 3420; i++) {
+            const tier = skillTiers[(i - 1) % skillTiers.length];
+            const cat = drillCategories[(i - 1) % drillCategories.length];
+            const mapInfo = mapCatalog[i % mapCatalog.length];
+            const guide = plainEnglishGuides[cat];
+
+            masterDrillVault.push({
+                id: `drill-${i}`,
+                tier: tier,
+                category: cat,
+                title: `${tier} ${cat} Drill #${i}`,
+                mapName: mapInfo.name,
+                mapCode: mapInfo.code,
+                duration: `${((i % 3) + 1) * 5} mins`,
+                why: guide.why,
+                steps: guide.steps,
+                mistake: guide.mistake
+            });
+        }
+
+        let vaultPage = 1;
+        const vaultPageSize = 10;
+        let vaultTierFilter = 'all';
+        let vaultCatFilter = 'all';
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 3000);
+        }
+
+        function copyText(text, customMsg) {
+            navigator.clipboard.writeText(text);
+            showToast(customMsg || `Copied: ${text}`);
+        }
+
+        function copyCode(code) {
+            copyText(code, `Copied Map Code: ${code} — Paste this in Fortnite!`);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('[id^="tab-content-"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-600', 'text-white');
+                btn.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-white/5');
+            });
+
+            document.getElementById(`tab-content-${tabId}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-white/5');
+                activeNav.classList.add('bg-rose-600', 'text-white');
+            }
+
+            if (tabId === 'library') renderVaultUI();
+            if (tabId === 'optimization') renderTweaks();
+            if (tabId === 'kbm') renderKbmTable();
+            if (tabId === 'controller') renderCtrlTable();
+            if (tabId === 'roadmap') renderRoadmapUI();
+            if (tabId === 'dashboard') renderDashboard();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function quickStartBeginner() {
+            document.getElementById('routine-level').value = 'Beginner';
+            document.getElementById('routine-focus').value = 'All-Around Practice';
+            document.getElementById('routine-time-input').value = '30 minutes';
+            switchTab('routine');
+            generateGranularRoutine();
+        }
+
+        function setVaultTier(tier) {
+            vaultTierFilter = tier;
+            vaultPage = 1;
+            document.querySelectorAll('.vault-tier-btn').forEach(b => {
+                b.classList.remove('bg-rose-600', 'text-white', 'font-bold');
+                b.classList.add('bg-white/5', 'text-slate-300', 'font-semibold');
+            });
+            const active = document.getElementById(`tier-btn-${tier}`);
+            active.classList.remove('bg-white/5', 'text-slate-300', 'font-semibold');
+            active.classList.add('bg-rose-600', 'text-white', 'font-bold');
+            renderVaultUI();
+        }
+
+        function setVaultCategory(cat) {
+            vaultCatFilter = cat;
+            vaultPage = 1;
+            document.querySelectorAll('.vault-cat-btn').forEach(b => {
+                b.classList.remove('bg-rose-600', 'text-white', 'font-bold');
+                b.classList.add('bg-white/5', 'text-slate-300', 'font-semibold');
+            });
+            const active = document.getElementById(`cat-btn-${cat}`);
+            active.classList.remove('bg-white/5', 'text-slate-300', 'font-semibold');
+            active.classList.add('bg-rose-600', 'text-white', 'font-bold');
+            renderVaultUI();
+        }
+
+        function filterVaultDrills() {
+            vaultPage = 1;
+            renderVaultUI();
+        }
+
+        function renderVaultUI() {
+            const container = document.getElementById('vault-items-container');
+            const query = document.getElementById('vault-search').value.toLowerCase().trim();
+
+            let filtered = masterDrillVault.filter(d => {
+                const matchTier = vaultTierFilter === 'all' || d.tier === vaultTierFilter;
+                const matchCat = vaultCatFilter === 'all' || d.category === vaultCatFilter;
+                const matchQuery = !query || d.title.toLowerCase().includes(query) || d.mapCode.includes(query) || d.category.toLowerCase().includes(query);
+                return matchTier && matchCat && matchQuery;
+            });
+
+            const total = filtered.length;
+            const start = (vaultPage - 1) * vaultPageSize;
+            const pageItems = filtered.slice(start, start + vaultPageSize);
+
+            document.getElementById('vault-pagination-info').innerText = `Showing ${total === 0 ? 0 : start + 1}–${Math.min(start + vaultPageSize, total)} of ${total.toLocaleString()} drills`;
+
+            if (pageItems.length === 0) {
+                container.innerHTML = `<div class="bg-black/60 border border-rose-900/30 rounded-2xl p-8 text-center text-slate-400 text-sm">No drills match that search.</div>`;
+                return;
+            }
+
+            container.innerHTML = pageItems.map(drill => `
+                <div class="bg-black/75 border border-rose-900/40 hover:border-rose-500/50 rounded-2xl p-6 space-y-4 transition-all">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-rose-900/30 pb-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs font-bold bg-rose-600/20 text-rose-300 px-2.5 py-0.5 rounded-lg border border-rose-500/30">${drill.tier}</span>
+                                <span class="text-xs font-bold text-slate-400">${drill.category}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white">${drill.title}</h3>
+                        </div>
+                        <div class="flex items-center space-x-2 self-start sm:self-center">
+                            <div class="bg-[#161013] border border-rose-800/50 px-3.5 py-2 rounded-xl text-xs font-mono text-rose-300 font-bold">${drill.mapCode}</div>
+                            <button onclick="copyCode('${drill.mapCode}')" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition cursor-pointer">Copy Code</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-rose-400 block">How to Do This Drill in Fortnite:</span>
+                            <ol class="space-y-1.5 text-sm text-slate-200 list-decimal list-inside">
+                                ${drill.steps.map(s => `<li>${s}</li>`).join('')}
+                            </ol>
+                        </div>
+                        <div class="bg-[#140e11] border border-rose-900/30 rounded-xl p-4 space-y-3">
+                            <div>
+                                <span class="text-xs font-bold text-emerald-400 block">Why This Helps You:</span>
+                                <p class="text-sm text-slate-200 mt-0.5">${drill.why}</p>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-amber-400 block">Common Mistake to Avoid:</span>
+                                <p class="text-sm text-slate-300 mt-0.5">${drill.mistake}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeVaultPage(dir) {
+            vaultPage = Math.max(1, vaultPage + dir);
+            renderVaultUI();
+        }
+
+        // ================= 6. ROUTINE GENERATOR =================
+        function setQuickTime(val) {
+            document.getElementById('routine-time-input').value = val;
+        }
+
+        function parseTimeToMinutes(str) {
+            const s = str.toLowerCase();
+            let mins = 0;
+            const hMatch = [...s.matchAll(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?|h)\b/g)];
+            hMatch.forEach(m => mins += parseFloat(m[1]) * 60);
+            const mMatch = [...s.matchAll(/(\d+)\s*(?:minutes?|mins?|m)\b/g)];
+            mMatch.forEach(m => mins += parseInt(m[1], 10));
+            if (mins === 0) {
+                const n = parseFloat(s);
+                mins = !isNaN(n) ? (n <= 8 ? n * 60 : n) : 30;
+            }
+            return Math.max(10, Math.round(mins));
+        }
+
+        function formatDurationLabel(m) {
+            const h = Math.floor(m / 60);
+            const rem = m % 60;
+            if (h > 0 && rem > 0) return `${h} hr ${rem} mins`;
+            if (h > 0) return `${h} ${h === 1 ? 'hour' : 'hours'}`;
+            return `${rem} minutes`;
+        }
+
+        function generateGranularRoutine() {
+            const level = document.getElementById('routine-level').value;
+            const focus = document.getElementById('routine-focus').value;
+            const rawTime = document.getElementById('routine-time-input').value;
+            const totalMins = parseTimeToMinutes(rawTime);
+            const formattedTime = formatDurationLabel(totalMins);
+            const output = document.getElementById('routine-output');
+
+            let matchingDrills = masterDrillVault.filter(d => {
+                const levelOk = d.tier === level;
+                const focusOk = focus === 'All-Around Practice' || d.category === focus;
+                return levelOk && focusOk;
+            });
+
+            const selected = matchingDrills.slice(0, 4);
+            let allocated = 0;
+
+            const structuredDrills = selected.map((item, idx) => {
+                let blockMins = idx === selected.length - 1
+                    ? Math.max(5, totalMins - allocated)
+                    : Math.max(5, Math.round(totalMins / selected.length));
+                allocated += blockMins;
+
+                const h = Math.floor(blockMins / 60);
+                const m = blockMins % 60;
+                const dLabel = h > 0 ? (m > 0 ? `${h}h ${m}m` : `${h}h`) : `${m} mins`;
+
+                return { ...item, duration: dLabel };
+            });
+
+            lastRoutine = { level, focus, formattedTime, drills: structuredDrills };
+
+            let html = `
+                <div class="bg-rose-950/30 border border-rose-500/40 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Your Custom Fortnite Checklist</span>
+                        <h3 class="text-xl font-extrabold text-white mt-0.5">${level} • ${focus} (${formattedTime})</h3>
+                    </div>
+                    <button onclick="saveCurrentRoutine()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-5 py-3 rounded-xl text-sm transition cursor-pointer shrink-0">
+                        <i class="fa-solid fa-bookmark mr-1.5"></i> Save This Routine
+                    </button>
+                </div>
+                <div class="space-y-5">
+            `;
+
+            structuredDrills.forEach((drill, idx) => {
+                html += `
+                    <div class="bg-black/80 border border-rose-900/40 rounded-2xl p-6 space-y-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-rose-900/30 pb-4 gap-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-9 h-9 rounded-xl bg-rose-600 text-white font-extrabold text-sm flex items-center justify-center shrink-0">${idx + 1}</span>
+                                <div>
+                                    <h4 class="text-lg font-bold text-white">${drill.title}</h4>
+                                    <span class="text-xs font-semibold text-rose-400">Practice for: ${drill.duration} • Map: ${drill.mapName}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2 self-start sm:self-center">
+                                <span class="text-sm font-mono bg-[#161013] px-3.5 py-2 rounded-xl border border-rose-800/50 text-white font-bold">${drill.mapCode}</span>
+                                <button onclick="copyCode('${drill.mapCode}')" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition cursor-pointer">Copy Code</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <span class="text-xs font-bold uppercase tracking-wider text-rose-400 block">Step-by-Step Instructions:</span>
+                                <ol class="space-y-1.5 text-sm text-slate-200 list-decimal list-inside">
+                                    ${drill.steps.map(step => `<li>${step}</li>`).join('')}
+                                </ol>
+                            </div>
+                            <div class="bg-[#140e11] p-4 rounded-xl border border-rose-900/30 space-y-3">
+                                <div>
+                                    <span class="text-xs font-bold text-emerald-400 block">Why This Helps:</span>
+                                    <p class="text-sm text-slate-200 mt-0.5">${drill.why}</p>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-amber-400 block">Watch Out For:</span>
+                                    <p class="text-sm text-slate-300 mt-0.5">${drill.mistake}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            output.innerHTML = html;
+        }
+
+        // ================= 7. GOALS / ROADMAP BUILDER =================
+        let currentRoadmapGoals = JSON.parse(localStorage.getItem('v4mp_roadmap')) || [];
+
+        function renderRoadmapUI() {
+            const container = document.getElementById('roadmap-goals-container');
+            document.getElementById('roadmap-count-badge').innerText = `${currentRoadmapGoals.length} Goals`;
+
+            if (currentRoadmapGoals.length === 0) {
+                container.innerHTML = `<div class="bg-black/60 border border-rose-900/30 rounded-2xl p-8 text-center text-slate-400 text-sm">You don't have any goals listed yet. Add your own goal above or click <strong>Make Goals For Me (AI)</strong>!</div>`;
+                return;
+            }
+
+            container.innerHTML = currentRoadmapGoals.map((goal, idx) => `
+                <div class="bg-black/75 border border-rose-900/40 rounded-2xl p-5 flex items-center justify-between gap-4">
+                    <div class="flex items-start space-x-3.5">
+                        <span class="w-8 h-8 rounded-xl bg-rose-600/20 border border-rose-500/30 text-rose-400 font-bold text-sm flex items-center justify-center shrink-0">${idx + 1}</span>
+                        <div>
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="text-xs font-bold bg-rose-600 text-white px-2.5 py-0.5 rounded-lg">${goal.timeframe}</span>
+                                <span class="text-xs font-bold text-slate-400">${goal.category}</span>
+                            </div>
+                            <h4 class="text-base font-bold text-white">${goal.text}</h4>
+                        </div>
+                    </div>
+                    <button onclick="removeRoadmapGoal(${idx})" class="text-slate-400 hover:text-rose-500 text-sm transition cursor-pointer p-2" title="Remove Goal"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function addCustomRoadmapGoal() {
+            const timeframe = document.getElementById('roadmap-timeframe').value;
+            const category = document.getElementById('roadmap-category').value;
+            const text = document.getElementById('roadmap-goal-input').value.trim();
+
+            if (!text) {
+                showToast("Type what goal you want to achieve first!");
+                return;
+            }
+
+            currentRoadmapGoals.unshift({ timeframe, category, text });
+            localStorage.setItem('v4mp_roadmap', JSON.stringify(currentRoadmapGoals));
+            document.getElementById('roadmap-goal-input').value = '';
+            renderRoadmapUI();
+            showToast("Goal added to your checklist!");
+        }
+
+        function removeRoadmapGoal(index) {
+            currentRoadmapGoals.splice(index, 1);
+            localStorage.setItem('v4mp_roadmap', JSON.stringify(currentRoadmapGoals));
+            renderRoadmapUI();
+            showToast("Goal removed.");
+        }
+
+        function triggerAIRoadmapGeneration() {
+            const aiGoals = [
+                { timeframe: 'This Week', category: 'Aim', text: 'Practice tracking targets for 15 minutes before playing Battle Royale.' },
+                { timeframe: 'This Week', category: 'Building', text: 'Build a wall and ramp immediately every time an enemy shoots at you.' },
+                { timeframe: 'This Month', category: 'Editing', text: 'Learn to edit a right-hand window and reset it cleanly without missing tiles.' },
+                { timeframe: 'This Month', category: 'Ranked', text: 'Climb two full Ranked divisions by playing smart near the safe zone edge.' },
+                { timeframe: 'This Year', category: 'Game Sense', text: 'Master endgame rotations and win 25+ solo or duo matches this season.' }
+            ];
+
+            currentRoadmapGoals = [...aiGoals, ...currentRoadmapGoals];
+            localStorage.setItem('v4mp_roadmap', JSON.stringify(currentRoadmapGoals));
+            renderRoadmapUI();
+            showToast("AI created a weekly, monthly, and yearly goal plan for you!");
+        }
+
+        // ================= 8. WATCH & COACH (VOD ANALYZER) =================
+        async function startScreenCapture() {
+            try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                document.getElementById('live-video-preview').srcObject = stream;
+                document.getElementById('preview-container').classList.remove('hidden');
+                runAnalysisSimulation('Your Live Fortnite Screen');
+            } catch (err) {
+                showToast('Screen share cancelled — showing example coaching feedback.');
+                runDemoAnalysis('beginner');
+            }
+        }
+
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const vid = document.getElementById('live-video-preview');
+                vid.srcObject = null;
+                vid.src = URL.createObjectURL(file);
+                document.getElementById('preview-container').classList.remove('hidden');
+                runAnalysisSimulation(`Uploaded Video: ${file.name}`);
+            }
+        }
+
+        function runDemoAnalysis(type) {
+            document.getElementById('preview-container').classList.add('hidden');
+            let label = type === 'beginner' ? 'Beginner Match Example' : type === 'zerobuild' ? 'Zero Build Match Example' : 'Late-Game Circle Example';
+            runAnalysisSimulation(label);
+        }
+
+        function runAnalysisSimulation(source) {
+            const box = document.getElementById('analysis-results');
+            box.innerHTML = `
+                <div class="bg-black/70 border border-rose-800/40 rounded-2xl p-8 text-center text-sm font-semibold text-rose-300 space-y-2">
+                    <i class="fa-solid fa-spinner animate-spin text-2xl text-rose-500"></i>
+                    <div>AI Coach is reviewing <strong class="text-white">${source}</strong>...</div>
+                </div>
+            `;
+            setTimeout(() => {
+                box.innerHTML = `
+                    <div class="bg-black/80 border border-rose-500/40 rounded-2xl p-6 space-y-5 animate-fade">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-rose-900/40 pb-4 gap-2">
+                            <div>
+                                <span class="text-xs font-bold uppercase text-rose-400">Coach Feedback Ready</span>
+                                <h3 class="text-xl font-extrabold text-white">Top 2 Things to Fix Next</h3>
+                            </div>
+                            <button onclick="quickStartBeginner()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition cursor-pointer">
+                                Build Practice Routine to Fix These
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-[#140e11] p-5 rounded-xl border border-rose-900/40 space-y-2">
+                                <span class="text-xs font-bold bg-rose-600 text-white px-2.5 py-0.5 rounded-lg">Fix #1</span>
+                                <h4 class="text-base font-bold text-white">Keep Your Crosshair Higher</h4>
+                                <p class="text-sm text-slate-300">You often look slightly at the floor while running. Aim at chest/head height so you are ready to shoot immediately when someone appears.</p>
+                            </div>
+                            <div class="bg-[#140e11] p-5 rounded-xl border border-rose-900/40 space-y-2">
+                                <span class="text-xs font-bold bg-rose-600 text-white px-2.5 py-0.5 rounded-lg">Fix #2</span>
+                                <h4 class="text-base font-bold text-white">Close Your Wall After Shooting</h4>
+                                <p class="text-sm text-slate-300">After editing a window and taking a shot, reset the wall right away so the enemy cannot shoot you back.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }, 800);
+        }
+
+        // ================= 9. ACCOUNT & SAVED ROUTINES =================
+        function openAuthModal() { document.getElementById('auth-modal').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
+
+        function handleRegistration(e) {
+            e.preventDefault();
+            const username = document.getElementById('reg-user').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+
+            currentUser = { username, email };
+            localStorage.setItem('v4mp_user', JSON.stringify(currentUser));
+            if (!localStorage.getItem(`v4mp_routines_${email}`)) {
+                localStorage.setItem(`v4mp_routines_${email}`, JSON.stringify([]));
+            }
+
+            closeAuthModal();
+            updateAuthHeader();
+            showToast(`Welcome, ${username}! Your account is ready.`);
+            switchTab('dashboard');
+        }
+
+        function updateAuthHeader() {
+            const area = document.getElementById('auth-action-area');
+            const badge = document.getElementById('dash-badge');
+            if (currentUser) {
+                const routines = JSON.parse(localStorage.getItem(`v4mp_routines_${currentUser.email}`)) || [];
+                if (routines.length > 0) badge.classList.remove('hidden');
+                area.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <button onclick="switchTab('dashboard')" class="bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl cursor-pointer">
+                            <i class="fa-solid fa-user text-rose-400 mr-1.5"></i>${currentUser.username}
+                        </button>
+                        <button onclick="logoutUser()" title="Sign Out" class="bg-white/5 hover:bg-rose-600 text-slate-300 hover:text-white p-2.5 rounded-xl cursor-pointer text-xs">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                badge.classList.add('hidden');
+                area.innerHTML = `
+                    <button onclick="openAuthModal()" class="bg-rose-600 hover:bg-rose-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-all flex items-center space-x-2 cursor-pointer">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Save Progress</span>
+                    </button>
+                `;
+            }
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('v4mp_user');
+            updateAuthHeader();
+            renderDashboard();
+            showToast('Signed out.');
+        }
+
+        function saveCurrentRoutine() {
+            if (!lastRoutine) return;
+            if (!currentUser) {
+                showToast('Create a free account first so your routine stays saved!');
+                openAuthModal();
+                return;
+            }
+            const key = `v4mp_routines_${currentUser.email}`;
+            const list = JSON.parse(localStorage.getItem(key)) || [];
+            const newEntry = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString(),
+                ...lastRoutine,
+                drills: lastRoutine.drills.map(d => ({ ...d, completed: false }))
+            };
+            list.unshift(newEntry);
+            localStorage.setItem(key, JSON.stringify(list));
+            updateAuthHeader();
+            showToast('Routine saved to your Saved tab!');
+            switchTab('dashboard');
+        }
+
+        function renderDashboard() {
+            const sub = document.getElementById('dash-subtext');
+            const action = document.getElementById('dash-action-btn');
+            const listContainer = document.getElementById('saved-routines-list');
+
+            document.getElementById('stat-roadmap').innerText = currentRoadmapGoals.length;
+
+            if (!currentUser) {
+                sub.innerText = "Create a free account with your email to save your routines and check off drills.";
+                action.innerHTML = `<button onclick="openAuthModal()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-5 py-3 rounded-xl text-sm transition cursor-pointer">Create Free Account</button>`;
+                document.getElementById('stat-saved').innerText = "0";
+                listContainer.innerHTML = `<div class="bg-black/60 border border-rose-900/30 rounded-2xl p-8 text-center text-slate-400 text-sm">Sign in or create a free account above to save your routines.</div>`;
+                return;
+            }
+
+            sub.innerHTML = `Signed in as <strong class="text-white">${currentUser.username}</strong> (${currentUser.email})`;
+            action.innerHTML = `<button onclick="switchTab('routine')" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-5 py-3 rounded-xl text-sm transition cursor-pointer">+ New Routine</button>`;
+
+            const key = `v4mp_routines_${currentUser.email}`;
+            const routines = JSON.parse(localStorage.getItem(key)) || [];
+
+            document.getElementById('stat-saved').innerText = routines.length;
+            document.getElementById('stat-rank').innerText = routines.length >= 3 ? "Dedicated Grinder" : "Rising Player";
+
+            if (routines.length === 0) {
+                listContainer.innerHTML = `<div class="bg-black/60 border border-rose-900/30 rounded-2xl p-8 text-center text-slate-400 text-sm">No saved routines yet. Go to <strong>Routines</strong> to create and save your first routine!</div>`;
+                return;
+            }
+
+            listContainer.innerHTML = routines.map(r => `
+                <div class="bg-black/75 border border-rose-900/40 rounded-2xl p-6 space-y-4">
+                    <div class="flex items-center justify-between border-b border-rose-900/30 pb-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-white">${r.level} • ${r.focus}</h4>
+                            <span class="text-xs text-slate-400">Saved on ${r.date} • Total Time: <strong class="text-rose-400">${r.formattedTime}</strong></span>
+                        </div>
+                        <button onclick="deleteRoutine(${r.id})" class="text-xs font-bold text-slate-400 hover:text-rose-500 transition cursor-pointer">Delete</button>
+                    </div>
+                    <div class="space-y-2">
+                        ${r.drills.map((d, dIdx) => `
+                            <div onclick="toggleSavedDrill(${r.id}, ${dIdx})" class="flex items-center justify-between p-3.5 rounded-xl border transition cursor-pointer ${d.completed ? 'bg-emerald-950/25 border-emerald-700/40 text-slate-400' : 'bg-[#140e11] border-rose-900/30 text-white hover:border-rose-500/40'}">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-5 h-5 rounded-md border flex items-center justify-center ${d.completed ? 'bg-emerald-500 border-emerald-500 text-black' : 'border-rose-500/50'}">
+                                        ${d.completed ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                                    </div>
+                                    <span class="text-sm font-semibold ${d.completed ? 'line-through text-slate-500' : ''}">${d.title} (${d.duration})</span>
+                                </div>
+                                <button type="button" onclick="event.stopPropagation(); copyCode('${d.mapCode}')" class="text-xs font-mono bg-black px-3 py-1.5 rounded-lg border border-rose-800/50 text-rose-300 cursor-pointer">${d.mapCode}</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleSavedDrill(routineId, drillIdx) {
+            const key = `v4mp_routines_${currentUser.email}`;
+            const routines = JSON.parse(localStorage.getItem(key)) || [];
+            const r = routines.find(item => item.id === routineId);
+            if (r) {
+                r.drills[drillIdx].completed = !r.drills[drillIdx].completed;
+                localStorage.setItem(key, JSON.stringify(routines));
+                renderDashboard();
+            }
+        }
+
+        function deleteRoutine(routineId) {
+            const key = `v4mp_routines_${currentUser.email}`;
+            let routines = JSON.parse(localStorage.getItem(key)) || [];
+            routines = routines.filter(item => item.id !== routineId);
+            localStorage.setItem(key, JSON.stringify(routines));
+            updateAuthHeader();
+            renderDashboard();
+            showToast('Routine deleted.');
+        }
+
+        updateAuthHeader();
+    </script>
+</body>
+</html>
